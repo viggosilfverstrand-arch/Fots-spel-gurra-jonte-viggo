@@ -1,4 +1,4 @@
-# SÄTT TILL #jhca
+# SÄTT TILL
 from monster import *
 import random as rand
 from items import *
@@ -10,8 +10,8 @@ import os
 
 # Characters
 tank = Characterclass("Mr.Tank", 200, 10, 0.1, 2)
-warrior = Characterclass("Warrior", 100, 25, 0.1, 2)
-magi = Characterclass("Magician", 60, 35, 0.2, 1.5)
+warrior = Characterclass("Warrior", 100, 20, 0.1, 2)
+magi = Characterclass("Magician", 60, 30, 0.2, 1.5)
 gambler = Characterclass("Gambler", 100, 1, 0.35, 1000)
 
 # Weapon
@@ -33,7 +33,7 @@ Item_list1 = [Item("Small_Health_Potion", 15, 1),
 # Monster
 monster_list1 = [Monster("Skeleton", 40, 20, 1),
                  Monster("Goblin", 75, 10, 1),
-                 Monster("Goon", 35, 5, 1),
+                 Monster("Goon", 35, 20, 1),
                  Monster("Bandit", 50, 13, 1)]
 
 monster_list2 = [Monster("Demon", 175, 28, 1),
@@ -146,14 +146,21 @@ if loaded == False:
     playername = input("Vad ska din karaktär heta? ")
     print(f"Du valde namnet {playername}!")
     playerclass.weapon = Hands
-    print("load false")
 alive = True
 
 def the_final_struggle(alive):
+    slowtype("Du förväntar dig att se de tre stigarna men den här gången så finns de inte",0.1)
+    slowtype("Mörka moln drar in över himlen och det börjar regna",0.08)
+    slowtype("Träden vajar och blixtar slår ner runt omkring dig",0.08)
+    time.sleep(2)
+    slowtype("Plöstlsigt så öppnas marken framför dig",0.08)
+    slowtype(f"\" {playername} ")
     alive = battle(Boss, playerclass, alive)
     if alive == False:
         slowtype("")
         return playerclass.alive
+
+
 
 def korsningen():
     if playerclass.skog == True and playerclass.city == True and playerclass.grott == True:
@@ -164,7 +171,7 @@ def korsningen():
         print("Du kommer till en skog där stigen blir till en väg och till två stigar")
         time.sleep(2)
         vägval = input(
-            "Vilken stig väljer du? 1 = Vägen, 2 = Stig nr1, 3 = Steg nr2")
+            "Vilken stig väljer du? 1 = Gå tillbaka, 2 = Fram, 3 = vänster -> ")
         if vägval == "1":
             gårhem = "ja"
             return gårhem  # returnera värdern som player fått under äventyret
@@ -174,29 +181,35 @@ def korsningen():
         print("Du kommer till en skog där stigen blir till tre stigar")
         time.sleep(2)
         vägval = input(
-            "Vilken stig väljer du? 1 = Stig , 2 = Stig nr1, 3 = Steg nr2")
+            "Vilken stig väljer du? 1 = Vänster , 2 = Fram, 3 = Höger -> ")
         time.sleep(2)
         print(f"Du går {vägval}")
     return plats
 
 def vägdecision():  # Väg val på de olika vägarna
-    vägval3 = input("Vill du vända tillbaka? ja eller nej")
-    if len(vägval3) == 2:
-        vägsvar3 = 1      # Player vill vända tillbaka
-    else:
-        vägsvar = 2  # Vill forsätta
-    return vägsvar
+    while True:
+        try:
+            vägval3 = input("vill du vända tillbaka? ja eller nej -> ")
+            if vägval3 == "ja":
+                vägsvar = 1      # Player vill vända tillbaka
+            elif vägval3 == "nej":
+                vägsvar = 2  # Vill forsätta
+            else:
+                print("Du skrev fel")
+            return vägsvar
+        except:
+            print("gör om gör rätt")
 
 def Markanden():
-    print("vällkomen till markanden")
+    print("välkomen till markanden")
     while True:
         time.sleep(2)
-        print(f""" Vad vill du kolla på?        DU har {playerclass.money} guld
-        Vapen: 1. Svärd      Damage: 3     Crit factor: 5/10    Pris: 30 guld
-            2. Dolk          Damage: 2     Crit factor: 6/10    Pris: 20 guld
-            3. Smörknikv     Damage: 1,05  Crit factor: 2/10    Pris: 5 guld
-            4. Yxa           Damage: 4     Crit factor: 2/10    Pris: 40 guld
-            5. Knogjärn      Damage: 2     Crit factor: 7/10    Pris: 30 guld
+        print(f""" Vad vill du kolla på?        Du har {playerclass.money} guld
+        Vapen: 1. Svärd      Damage: 3x     Crit factor: 5/10    Pris: 30 guld
+            2. Dolk          Damage: 2x     Crit factor: 6/10    Pris: 20 guld
+            3. Smörknikv     Damage: 1,05x  Crit factor: 2/10    Pris: 5 guld
+            4. Yxa           Damage: 4x     Crit factor: 2/10    Pris: 40 guld
+            5. Knogjärn      Damage: 2x     Crit factor: 7/10    Pris: 30 guld
 
         Items: 6. Small Health Potion    + 15 Hp            Pris: 10 guld
                7. Medium Helth Potion    + 30 Hp            Pris: 20 guld
@@ -205,7 +218,7 @@ def Markanden():
 
                q. Lämna affären
         """)
-        köpval = input("Vad vill du köpa")
+        köpval = input("Vad vill du köpa? -> ")
         time.sleep(2)
         if köpval == "1":   #Svärd
             if playerclass.money >= 30:
@@ -220,13 +233,13 @@ def Markanden():
                 playerclass.amoney(-20)
                 Vapen = weapon_list1[1]
                 playerclass.weapon = Vapen
-            print("Ditt nya vappen är en Dolk")
+            print("Ditt nya vapen är en Dolk")
         elif köpval == "3":  #Smörkniv
             if playerclass.money >= 10:
                 playerclass.amoney(-10)
                 Vapen = weapon_list1[2]
                 playerclass.weapon = Vapen
-                print("Ditt nya vappen är Smörkniv")
+                print("Ditt nya vapen är Smörkniv")
             else:
                 print("Du har inte tillräckligt med pengar")
         elif köpval == "4":   #YXA
@@ -234,7 +247,7 @@ def Markanden():
                 playerclass.amoney(-40)
                 Vapen = weapon_list1[3]
                 playerclass.weapon = Vapen
-                print("Ditt nya vappen är Yxa")
+                print("Ditt nya vapen är Yxa")
             else:
                 print("Du har inte tillräckligt med pengar")
         elif köpval == "5":    #Knogjärn
@@ -242,7 +255,7 @@ def Markanden():
                 playerclass.amoney(-30)
                 Vapen = weapon_list1[4]
                 playerclass.weapon = Vapen
-                print("Ditt nya vappen är Knogjärn")
+                print("Ditt nya vapen är Knogjärn")
             else:
                 print("Du har inte tillräckligt med pengar")
         elif köpval == "6":
@@ -719,13 +732,15 @@ def Quiz():
 
 def vägescape():  # Väg val på de olika vägarna
     while True:
-        vägval4 = input("Vill du gå vänster eller höger?")
+        vägval3 = input("Vill du gå vänster eller höger?")
         try:
-            if vägval3 == "vänster":
-                vägsvar3 = 1      # Player vill gå vänstern
-            else:
+            if vägval3 == "vänster" :
+                vägsvar = 1      # Player vill gå vänstern
+            elif vägval3 == "höger":
                 vägsvar = 2  # Vill gå höger
-                return vägsvar
+            else:
+                print("Du skrev fel")
+            return vägsvar
             break
         except:
             print("Skriv om skriv rätt")
@@ -790,7 +805,7 @@ def battle(monsterval, playerclass, alive):
             playerclass.add_exp(reward)
             belopp = monsterval.money_reward()
             print(f"Du fick {belopp} guld")
-            playerclass.amoney(reward)
+            playerclass.amoney(belopp)
             print(f"Du fick {reward} xp")
             
             return 
@@ -801,15 +816,15 @@ def battle(monsterval, playerclass, alive):
         if playerclass.hp <= 0:
             print("Du blev besegrad av monstret!")
             playerclass.alive = False
-            return playerclass
+            return playerclass.alive
 
 
 
 def grottvägen(alive):
-    print("Efter att gått på stigen en tag kommer du fram till en grott öppning")
+    print("Efter att du har gått på stigen en tag kommer du fram till en grott öppning.")
     time.sleep(2)
 
-    print("Du kikar ner i den, grottan ser fuktig ut och har droppande stalaktiter")
+    print("Du kikar ner i den, grottan ser fuktig ut och har droppande stalaktiter.")
     if vägdecision() == 1:  # Om man vänder så kommer man tillbaka till vägvalet
         return
     else:  # Forsätte
@@ -821,13 +836,13 @@ def grottvägen(alive):
         time.sleep(2)
         print("Du tumlar neråt, det gör ont,")
         time.sleep(2)
-        print("Efter vad som känns som en evighet så stannar du entligen")
+        print("Efter vad som känns som en evighet så stannar du äntligen")
         time.sleep(2)
         print("Du reser dig upp och kollar dig omkring")
         time.sleep(2)
-        print("En lång rak grotta du inte kan se slutet på")
+        print("Du är i en lång rak grotta du inte kan se slutet på")
         time.sleep(2)
-        print("I perferin ser du rörelser, du vänder dig snabbt om och ser nåting springa mot dig")
+        print("I perferin ser du rörelser, du vänder dig snabbt om och ser någonting springa mot dig")
         monsterval = monsterpullar()
         alive = battle(monsterval, playerclass, alive)
         if alive == False:          # Alive ändras i battle func
@@ -843,11 +858,12 @@ def grottvägen(alive):
     stensvar = input("vilka var talen?  xx xx")
     time.sleep(2)
     if stensvar == "13 98":
-        print("Du fick rätt, du undivker stenarna")
+        print("Du fick rätt och på något sätt undivker stenarna")
     else:
         print("Du såg inte visionen och blev träffad av en sten")
         playerclass.hp -= 10  # Tar bort liv från gubben
         print(f"Du har nu {playerclass.hp} hp")
+    print(playerclass.money)
     print("Efter stenraset går du vidare")
     time.sleep(5)
     print("Efter ett tag kommer du till en korsning")
@@ -859,7 +875,7 @@ def grottvägen(alive):
         print("Du går vänster")
         time.sleep(3)
         print("Grottan börjar snart ljusna och du känner luften bli varmare")
-        if vägdecision == 1:  # playern vänder
+        if vägdecision() == 1:  # playern vänder
             print("Du vänder tillbaka")
             time.sleep(3)
             print("Du kommer tillbaka till korsning och går förbi skylten ")
@@ -871,9 +887,9 @@ def grottvägen(alive):
     time.sleep(3)
     print("Gången krymper, luften blir kallare. Eko av droppande vatten hörs överallt.")
     time.sleep(2)
-    print("Grottan forsätter gå ner snart når vattnet dig upp till midjan")
+    print("Grottan forsätter att gå ner och snart når vattnet upp till din midja")
     time.sleep(2)
-    print("Det är svängar överallt, det känns som lybyrint")
+    print("Det är svängar överallt, det känns som labyrint")
     time.sleep(2)
     print("Plötsligt hör du ett isande skrik bakom dig,")
     time.sleep(2)
@@ -934,7 +950,7 @@ def grottvägen(alive):
         print("Plötsligt ser du en stor hiss")
         print("Den ser gammal ut men den kanska funkar")
         hissvar = input("Vill du trycka på hissknappen?")
-        if hissvar.len == 2:
+        if hissvar == "ja":
             pass
 
     time.sleep(1)
@@ -984,7 +1000,7 @@ def grottvägen(alive):
         else:
             print("Du drar fram ditt vapen och striden börjar")
             # Slåss mot mystical men
-            alive = battle(monsterval, playerclass, alive)
+            alive = battle(Skuggriddare, playerclass, alive)
             if alive == False:          # Alive ändras i battle func
                 return playerclass.alive
     else:
@@ -995,11 +1011,11 @@ def grottvägen(alive):
     time.sleep(1)
     print("Slutligen når du grottans mynning")
     time.sleep(2)
-    print("Solens ljus träffar ditt ansikte, och du andas de1n friska luften")
+    print("Solens ljus träffar ditt ansikte, och du andas den friska luften")
     playerclass.grott = True
     return 
 
-grottvägen(alive)
+
 
 def skogsvägen(alive):
     print("Efter ett tag kommer du fram till en mörk skog.")
@@ -1020,8 +1036,6 @@ def skogsvägen(alive):
             # global adventuring
             # adventuring = False
             # return
-    print("Du fick 15 guldmynt eftersom att du beserade monstret!")
-    playerclass.amoney(15)
     time.sleep(2)
     print("Efter fighten så fortsätter du in i den mörka skogen.")
     time.sleep(3)
@@ -1034,7 +1048,8 @@ def skogsvägen(alive):
     print("Bakifrån dig hörs ett högt knak och vänder dig om för att se ett gigantiskt träd falla mot din riktning")
     time.sleep(3)
     skogsträdfall = int(input("""                            Vill du:
-1. Undvika vänster   2. Undvika höger   3. Slå sönder trädet oskadad"""))
+1. Undvika vänster   2. Undvika höger   3. Slå sönder trädet oskadad
+                          -> """))
     if skogsträdfall == 1:
         print("Du undvek trädet genom att göra en dramatisk rull åt vänster och kom ut oskaddad.")
     elif skogsträdfall == 2:
@@ -1090,87 +1105,84 @@ def skogsvägen(alive):
     while True:
         try: 
             Stuga_val = int(input("""      Vill du:
-            1. Gå in i stugan       2. Strunta i stugan och fortsätta vandra"""))
+            1. Inspektera stugan       2. Strunta i stugan och fortsätta vandra
+                                            -> """))
             if Stuga_val == 1:
-                slowtype("Du bestämmer dig för att gå in i stugan i hopp om resurser som kan hjälpa dig komma ut ur skogen.",0.1)
-                slowtype("Du går fram till den lilla stugan och tar en titt in genom fönstret.",0.1)
-                slowtype("Stugans insida ser väl behandlad ut, nästan som att någon bodde här ute i skogen.", 0.1)
-                slowtype("Helt plötsligt hör du ett prassel bakom dig och du vänder dig hastigt om.",0.1)
-                slowtype("Framför dig står en kort gammal dam som kollar på dig med nyfikna ögon.",0.1)
+                slowtype("Du bestämmer dig för att gå in i stugan i hopp om resurser som kan hjälpa dig komma ut ur skogen.",0.05)
+                slowtype("Du går fram till den lilla stugan och tar en titt in genom fönstret.",0.05)
+                slowtype("Stugans insida ser väl behandlad ut, nästan som att någon bodde här ute i skogen.", 0.05)
+                slowtype("Helt plötsligt hör du ett prassel bakom dig och du vänder dig hastigt om.",0.05)
+                slowtype("Framför dig står en kort gammal dam som kollar på dig med nyfikna ögon.",0.05)
                 slowtype("Men hallå där! Säger Damen.", 0.05)
                 slowtype("H-hej, säger du osäkert tillbaks.",0.05)
-                slowtype("Vad gör en ung äventyrare som dig här ute i denna farliga skog? undrar kvinnan.",0.05)
-                while True:
-                    try:   
-                        damfråga = int(input("""Vad svarar du?
-                        1. Skulle kunna fråga detsamma. 2. Inget för dig att veta! """))
-                        if damfråga == 1:
-                            slowtype("Om du inte redan visste det så bor jag här i min stuga som du just snokade runt. Svarade Damen.",0.05)
-                            slowtype("Jag hoppas du vet att det inte är särskilt trevligt att snoka runt andras hus. Säger hon besviket.",0.05)
-                            break
-                        elif damfråga ==2:
-                            slowtype("Förlåt för att jag frågade, menade inte att kränka dig. Svarade Damen.",0.05)
-                            break
-                        else:
-                            print("Du gav inte ett giltigt svar, svara om.")
-                    except:
-                        print("Du gav inte ett giltigt svar, svara om.")
+                slowtype("Vad gör en ung äventyrare som dig här ute i denna farliga skog? undrar kvinnan.",0.05)   
+                damfråga = int(input("""                Vad svarar du?
+    1. Skulle kunna fråga detsamma. 2. Inget för dig att veta! -> """))
+                if damfråga == 1:
+                    slowtype("Om du inte redan visste det så bor jag här i stuga som du just snokade runt. Svarade Damen.",0.05)
+                    slowtype("Jag hoppas du vet att det inte är särskilt trevligt att snoka runt andras hus. Säger hon besviket.",0.05)
+                elif damfråga ==2:
+                    slowtype("Förlåt för att jag frågade, menade inte att kränka dig. Svarade Damen.",0.05)
+                else:
+                    slowtype("Du gav inte ett giltigt svar och svarar därför inte på frågan.",0.05)
+                    slowtype("Jahopp, inget svar? Sa damen besviket.")
                 
                 slowtype("Kom in i min stuga, denna skog är inte säker under nätterna, dessutom ser det ut som att du behöver vila lite.")
-                while True:
-                    try:
-                        damfråga2 =int(input("""Vad gör du?
-                        1. Följer med damen in i stugan.   2. Säger nej och fortsätter att vandra i skogen."""))
-                        if damfråga2 == 1:
-                            slowtype("Du följer med damen.",0.05)
-                            slowtype("Stugan är full med olika grejer, massor med olika växter och annat från skogen.",0.05)
-                            slowtype("Varför bor du här ute? Frågar du damen.")
-                            slowtype("Jag har alltid bott i dessa skogar. De är hela min barndom och jag kan inte få mig själv att flytta där ifrån. Det är också lungt dagarna om och jag slipper oftast personer som dig. Svarar damen", 0.05)
-                            slowtype("Jahopp då, får du ur dig.",0.05)
-                            time.sleep(1)
-                            while True:
-                                try:
-                                    damfråga3 = int(input("""jag gjorde min favoritgryta till middag, vill du ha? Frågar damen. Vad gör du?
-                                    1. Du tar villigt emot maten    2. Du avstår"""))
-                                    if damfråga3 ==1:
-                                        slowtype("Gärna! Säger du och tar emot en varm skål av grytan.",0.05)
-                                        slowtype("Vad är det för gryta? Frågar du.")
-                                        slowtype("Det är bara ett simpelt recept på en kaningryta jag brukade äta när jag var liten. Svarade damen.",0.1)
-                                        slowtype("Du gladligt tar ett stort slurp ur grytan.",0.05)
-                                        slowtype("WOW! Nästan skriker du rakt ut.",0.05)
-                                        slowtype("Vad är det pojk? Undrar damen.",0.1)
-                                        slowtype("Detta är den bästa grytan jag någonsin ätit i hela mitt liv! Säger du till damen.",0.05)
-                                        slowtype("Jag känner mig typ starkare!!! Skriker du glatt.",0.05)
-                                        slowtype("Men vad roligt att du gil... vad damen påväg att säga då hon blev avbruten av ett högt vrål.",0.05)
-                                        slowtype("Det är nog dags att gå och lägga oss säger damen nervöst.",0.05)
-                                        slowtype("Nästa dag vaknar du av att solen strålar i ditt ansikte",0.05)
-                                        slowtype("Du går upp och hälsar på damen som redan står och lagar frukost.",0.05)
-                                        slowtype("Det är nog dags för mig att gå min väg, men tack för att jag fick stanna här i natt. Säger du till damen.",0.05)
-                                        slowtype("Innan du går! säger damen snabbt.",0.05)
-                                        slowtype("Så vill jag ge dig en sak... fortsätter damen.",0.05)
-                                        slowtype("Min man var en äventyrare innan han gick bort och han hade en styrkedryck som nu inte används.",0.05)
-                                        slowtype("Jag tycker att du borde ta den om det kan hjälpa dig på något sätt.",0.05)
-                                        
-                                        
-                                        break
-                                    if damfråga3 ==2:
-                                        slowtype("Jag kan avstå. Säger du.",0.05)
-                                        slowtype("Skyll dig själv, mumlar damen.",0.05)
-                                        break
-                                    else:
-                                        print("Du gav inte ett giltigt svar, svara om.")
-                                except:
-                                    print("Du gav inte ett giltigt svar, svara om.")
-                            break
-                        
-                        elif damfråga2 ==2:
-                            slowtype("Nej, svarar du och går din väg djupare in i skogen utan att kolla tillbaka.")
-                            break
+                
+                damfråga2 = int(input("""       Vad gör du?
+            1. Följer med damen in i stugan.   2. Säger nej och fortsätter att vandra i skogen."""))
+                if damfråga2 == 1:
+                    slowtype("Du följer med damen.",0.05)
+                    slowtype("Stugan är full med olika grejer, massor med olika växter och annat från skogen.",0.05)
+                    slowtype("Varför bor du här ute? Frågar du damen.")
+                    slowtype("Jag har alltid bott i dessa skogar. De är hela min barndom och jag kan inte få mig själv att flytta där ifrån. Det är också lungt dagarna om och jag slipper oftast personer som dig. Svarar damen", 0.05)
+                    slowtype("Jahopp då. Får du ur dig.",0.05)
+                    time.sleep(1)
+                            
+                    damfråga3 = int(input("""jag gjorde min favoritgryta till middag, vill du ha? Frågar damen. Vad gör du?
+            1. Du tar villigt emot maten    2. Du avstår"""))
+                    if damfråga3 ==1:
+                        slowtype("Gärna! Säger du och tar emot en varm skål av grytan.",0.05)
+                        slowtype("Vad är det för gryta? Frågar du.")
+                        slowtype("Det är bara ett simpelt recept på en kaningryta jag brukade äta när jag var liten. Svarade damen.",0.1)
+                        slowtype("Du gladligt tar ett stort slurp ur grytan.",0.05)
+                        slowtype("WOW! Nästan skriker du rakt ut.",0.05)
+                        slowtype("Vad är det pojk? Undrar damen.",0.1)
+                        slowtype("Detta är den bästa grytan jag någonsin ätit i hela mitt liv! Säger du till damen.",0.05)
+                        slowtype("Jag känner mig typ starkare!!! Skriker du glatt.",0.05)
+                        slowtype("Men vad roligt att du gil... vad damen påväg att säga då hon blev avbruten av ett högt vrål.",0.05)
+                        slowtype("Det är nog dags att gå och lägga oss säger damen nervöst.",0.05)
+                        slowtype("Nästa dag vaknar du av att solen strålar i ditt ansikte",0.05)
+                        slowtype("Du går upp och hälsar på damen som redan står och lagar frukost.",0.05)
+                        slowtype("Det är nog dags för mig att gå min väg, men tack för att jag fick stanna här i natt. Säger du till damen.",0.05)
+                        slowtype("Innan du går! säger damen snabbt.",0.05)
+                        slowtype("Så vill jag ge dig en sak... fortsätter damen.",0.05)
+                        slowtype("Min man var en äventyrare innan han gick bort och han hade en styrkedryck som nu inte används.",0.05)
+                        slowtype("Jag tycker att du borde ta den om det kan hjälpa dig på något sätt.",0.05)
+                        slowtype("Du tar villigt emot drycken.",0.05)
+                        playerclass.item(Big_Health_Potion)
+                        slowtype("Tack. Säger du.")
+                        slowtype("Detta kan vara väldigt hjälpsamt.",0.05)
+                        slowtype("Du säger adjö till damen och går din väg.",0.05)
+
+                    
+                        if damfråga3 ==2:
+                            slowtype("Jag kan avstå. Säger du.",0.05)
+                            slowtype("Skyll dig själv, mumlar damen.",0.05)
+                            slowtype("Du går istället och lägger dig efter en lång dag.",0.05)
+                            slowtype("Du går upp tidigt nästa morgon och drar iväg utan att säga adjö.",0.05)
                         else:
-                            print("Du gav inte ett giltigt svar, svara om.")
-                    except:
-                        print("Du gav inte ett giltigt svar, svara om.")
-                break
+                            slowtype("Eftersom att du inte gav ett giltigt svar tror jag att du inte vill ha. Antar damen",0.05)
+                            slowtype("Precis. Säger du ohyfsat.",0.05)
+                            slowtype("Du går sedan och lägger dig för att sova efter den långa dagen.",0.05)
+                            slowtype("Du vaknar tidigt nästa dag och går din väg utan att kolla tillbaka",0.05)
+                            
+                        
+                    elif damfråga2 ==2:
+                        slowtype("Nej, svarar du och fortsätter gå utan att kolla tillbaka.")
+                        
+                else:
+                    print("Du gav inte ett giltigt svar, svara om.")
             elif Stuga_val == 2:
                 slowtype("Du bestämmer dig för att struna i stugan och fortsätter att vandra genom den täta skogen.",0.05)
                 break
@@ -1178,7 +1190,8 @@ def skogsvägen(alive):
                 print("Du gav inte ett giltigt svar, svara om.")
         except: 
             print("Du gav inte ett giltigt svar, svara om.")
-        slowtype("Vinden blir starkare och starkare och framför dig ses en öppning mellan träden.",0.05)
+        
+        slowtype("Efter ännu ett tag av vandrande känner du att vinden blir starkare och starkare och framför dig ses en öppning mellan träden.",0.05)
         slowtype("Du har äntligen kommit ut ur den täta skogen och du kan nu fortsätta ditt äventyr starkare än någonsin.",0.05)
         playerclass.skog = True
         break
@@ -1215,7 +1228,7 @@ def abanondedcity(alive):
     while True:
         try:
             trapporupellerner = int(input("""Vill du:
-            1. Gå ner för trappan     2. Gå upp för trappan
+            1. Gå upp för trappan     2. Gå ner för trappan
             """))
             if trapporupellerner == 1:
                 time.sleep(1)
@@ -1232,7 +1245,7 @@ def abanondedcity(alive):
                 print("Ut kom runt 20 mynt, det värkar vara din lyckodag!")
                 time.sleep(2)
                 print("Du plockar upp mynten och går din väg.")
-                amoney(20)
+                playerclass.amoney(20)
                 break
                         
             elif trapporupellerner == 2:
@@ -1286,7 +1299,8 @@ def abanondedcity(alive):
     while True:
         try:
             museumfortsättaellerundersöka = int(input("""Vill du undersöka vrålet eller vill du fortsätta ut ur staden?
-            1. Undersöka     2. Fortsätta"""))
+            1. Undersöka     2. Fortsätta
+                        -> """))
             if museumfortsättaellerundersöka == 1:
                 time.sleep(1)
                 print("Du bestämmer dig för att undersöka vrålet och ändrar din gåriktning.")
@@ -1474,10 +1488,11 @@ Nu ekar tystnaden mellan ruinerna, och platsen bär på historiens mysterier och
                         slowtype("Skriv ett av de 4 nummer", 0.2)
     return playerclass.hybris       #Skickar tillbaka om playern har hybris eller inte
 
+#Om du vill prova något lägg till det här!!!
 
-        
+playerclass.add_exp(100)
+skogsvägen(alive)
             
-
 
 def main(alive):
     while alive == True:
@@ -1522,6 +1537,12 @@ def main(alive):
         elif Platsval == "4":
             playerclass.show_inventory()
             playerclass.show_weapon()
+            slowtype("Vill du konsumera allt i inventory?  Ja eller Nej",0.07)
+            invval = input()
+            if inval == "Ja":
+                playerclass.use_item()
+            
+           
             # Stats allocation och stat check
         elif Platsval == "5":
             casion()

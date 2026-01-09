@@ -30,15 +30,12 @@ class Characterclass():
     def exp_required(self):
         return int(20 * (1.5 ** (self.lvl - 1)))    # Switcha denna för mer balnce och jämnare tal vi lvl ups
 
-    
-
-    
-        
-
     def level_up(self):
         self.lvl += 1
-        self.str *= 1.10
-        self.hp *= 1.05
+        newstr = self.str * 1.10
+        self.str = round(newstr)
+        newhp = self.hp * 1.10
+        self.hp = round(newhp)
         print(f"{self.name} levla upp till {self.lvl}!")
 
 
