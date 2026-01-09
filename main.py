@@ -1,4 +1,4 @@
-# SÄTT TILL
+# SÄTT TILL #jhca
 from monster import *
 import random as rand
 from items import *
