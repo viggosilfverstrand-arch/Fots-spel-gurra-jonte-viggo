@@ -148,18 +148,20 @@ if loaded == False:
     playerclass.weapon = Hands
 alive = True
 
+
 def the_final_struggle(alive):
     slowtype("Du förväntar dig att se de tre stigarna men den här gången så finns de inte",0.1)
     slowtype("Mörka moln drar in över himlen och det börjar regna",0.08)
     slowtype("Träden vajar och blixtar slår ner runt omkring dig",0.08)
     time.sleep(2)
     slowtype("Plöstlsigt så öppnas marken framför dig",0.08)
-    slowtype(f"\" {playername} ")
+    slowtype(f"\" {playername} du har irriterat mig länge nu \"",0.08)
+    slowtype(" \"Du har besegrat alla mina undersåtar... Men inte mej  \"",0.08)
+    slowtype(" \"Jag är kungen av mörkret och du förtjänar att dö!   \"",0.08)
     alive = battle(Boss, playerclass, alive)
     if alive == False:
         slowtype("")
         return playerclass.alive
-
 
 
 def korsningen():
@@ -176,7 +178,7 @@ def korsningen():
             gårhem = "ja"
             return gårhem  # returnera värdern som player fått under äventyret
         else:
-            print(f"Du går {vägval}")
+            print(f"Du går stig {vägval}")
     else:
         print("Du kommer till en skog där stigen blir till tre stigar")
         time.sleep(2)
@@ -810,6 +812,8 @@ def battle(monsterval, playerclass, alive):
             
             return 
         print(f"{monsterval.name} attackerar dig och gör {monsterval.dmg} skada!")
+        if rand.random() < 0.1:
+            monsterval.dmg *1.2
         playerclass.hp -= monsterval.dmg
         print(f"Nu har du {playerclass.hp}hp kvar")
 
@@ -1115,8 +1119,8 @@ def skogsvägen(alive):
                 slowtype("Framför dig står en kort gammal dam som kollar på dig med nyfikna ögon.",0.05)
                 slowtype("Men hallå där! Säger Damen.", 0.05)
                 slowtype("H-hej, säger du osäkert tillbaks.",0.05)
-                slowtype("Vad gör en ung äventyrare som dig här ute i denna farliga skog? undrar kvinnan.",0.05)   
-                damfråga = int(input("""                Vad svarar du?
+                slowtype("Vad gör en ung äventyrare som dig här ute i denna farliga skog? Undrar kvinnan.",0.05)   
+                damfråga = int(input("""                        Vad svarar du?
     1. Skulle kunna fråga detsamma. 2. Inget för dig att veta! -> """))
                 if damfråga == 1:
                     slowtype("Om du inte redan visste det så bor jag här i stuga som du just snokade runt. Svarade Damen.",0.05)
@@ -1125,7 +1129,7 @@ def skogsvägen(alive):
                     slowtype("Förlåt för att jag frågade, menade inte att kränka dig. Svarade Damen.",0.05)
                 else:
                     slowtype("Du gav inte ett giltigt svar och svarar därför inte på frågan.",0.05)
-                    slowtype("Jahopp, inget svar? Sa damen besviket.")
+                    slowtype("Jahopp, inget svar? Sa damen besviket.",0.05)
                 
                 slowtype("Kom in i min stuga, denna skog är inte säker under nätterna, dessutom ser det ut som att du behöver vila lite.")
                 
@@ -1139,7 +1143,7 @@ def skogsvägen(alive):
                     slowtype("Jahopp då. Får du ur dig.",0.05)
                     time.sleep(1)
                             
-                    damfråga3 = int(input("""jag gjorde min favoritgryta till middag, vill du ha? Frågar damen. Vad gör du?
+                    damfråga3 = int(input("""Jag gjorde min favoritgryta till middag, vill du ha? Frågar damen. Vad gör du?
             1. Du tar villigt emot maten    2. Du avstår"""))
                     if damfråga3 ==1:
                         slowtype("Gärna! Säger du och tar emot en varm skål av grytan.",0.05)
@@ -1161,25 +1165,25 @@ def skogsvägen(alive):
                         slowtype("Jag tycker att du borde ta den om det kan hjälpa dig på något sätt.",0.05)
                         slowtype("Du tar villigt emot drycken.",0.05)
                         playerclass.item(Big_Health_Potion)
-                        slowtype("Tack. Säger du.")
+                        slowtype("Tack. Säger du.",0.05)
                         slowtype("Detta kan vara väldigt hjälpsamt.",0.05)
                         slowtype("Du säger adjö till damen och går din väg.",0.05)
 
                     
-                        if damfråga3 ==2:
-                            slowtype("Jag kan avstå. Säger du.",0.05)
-                            slowtype("Skyll dig själv, mumlar damen.",0.05)
-                            slowtype("Du går istället och lägger dig efter en lång dag.",0.05)
-                            slowtype("Du går upp tidigt nästa morgon och drar iväg utan att säga adjö.",0.05)
-                        else:
-                            slowtype("Eftersom att du inte gav ett giltigt svar tror jag att du inte vill ha. Antar damen",0.05)
-                            slowtype("Precis. Säger du ohyfsat.",0.05)
-                            slowtype("Du går sedan och lägger dig för att sova efter den långa dagen.",0.05)
-                            slowtype("Du vaknar tidigt nästa dag och går din väg utan att kolla tillbaka",0.05)
+                    elif damfråga3 ==2:
+                        slowtype("Jag kan avstå. Säger du.",0.05)
+                        slowtype("Skyll dig själv, mumlar damen.",0.05)
+                        slowtype("Du går istället och lägger dig efter en lång dag.",0.05)
+                        slowtype("Du går upp tidigt nästa morgon och drar iväg utan att säga adjö.",0.05)
+                    else:
+                        slowtype("Eftersom att du inte gav ett giltigt svar tror jag att du inte vill ha. Antar damen",0.05)
+                        slowtype("Precis. Säger du ohyfsat.",0.05)
+                        slowtype("Du går sedan och lägger dig för att sova efter den långa dagen.",0.05)
+                        slowtype("Du vaknar tidigt nästa dag och går din väg utan att kolla tillbaka",0.05)
                             
                         
-                    elif damfråga2 ==2:
-                        slowtype("Nej, svarar du och fortsätter gå utan att kolla tillbaka.")
+                elif damfråga2 ==2:
+                    slowtype("Nej, svarar du och fortsätter gå utan att kolla tillbaka.",0.05)
                         
                 else:
                     print("Du gav inte ett giltigt svar, svara om.")
@@ -1194,7 +1198,7 @@ def skogsvägen(alive):
         slowtype("Efter ännu ett tag av vandrande känner du att vinden blir starkare och starkare och framför dig ses en öppning mellan träden.",0.05)
         slowtype("Du har äntligen kommit ut ur den täta skogen och du kan nu fortsätta ditt äventyr starkare än någonsin.",0.05)
         playerclass.skog = True
-        break
+        return
 
 
 def abanondedcity(alive):
