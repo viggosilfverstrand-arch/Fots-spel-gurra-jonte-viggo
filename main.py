@@ -191,13 +191,12 @@ def korsningen():
 def vägdecision():  # Väg val på de olika vägarna
     while True:
         vägval3 = input("vill du vända tillbaka? Ja eller Nej -> ")
+        vägval3 = vägval3.upper()
         try:
-            if vägval3 == "ja" or "Ja":
+            if vägval3 == "JA" or "YES":
                 vägsvar = 1      # Player vill vända tillbaka
-            elif vägval3 == "nej":
-                vägsvar = 2  # Vill forsätta
-            else:
-                print("Du skrev fel")
+            elif vägval3 == "NEJ" or "NO":
+                vägsvar = 2  # Vill Fortsätta
             return vägsvar
         except:
             print("gör om gör rätt")
