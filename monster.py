@@ -1,6 +1,6 @@
 import random as rand
 class Monster():
-    def __init__(self, name, hp, dmg, lvl, critrate, crit_damage): 
+    def __init__(self, name, hp, dmg, lvl): 
         self.lvl = lvl
         self.hp = hp
         self.dmg = dmg

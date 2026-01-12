@@ -47,7 +47,7 @@ class Characterclass():
     
     def amoney(self, belopp):
         self.money += belopp
-        print(f" Du har nu {self.money} pengar")
+        print(f"Du har nu {self.money} pengar")
         
 
 
