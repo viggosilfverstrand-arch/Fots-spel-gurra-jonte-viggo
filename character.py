@@ -21,9 +21,9 @@ class Characterclass():
         self.weapon = None
         self.alive = True
         self.hybris= False
-        self.skog = True
-        self.grott = True
-        self.city = True
+        self.skog = False
+        self.grott = False
+        self.city = False
 
         self.inventory = []
 
