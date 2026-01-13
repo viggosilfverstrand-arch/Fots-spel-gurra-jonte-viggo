@@ -160,7 +160,6 @@ def the_final_struggle(alive):
     slowtype(" \"Jag är kungen av mörkret och du förtjänar att dö!   \"",0.08)
     alive = battle(Boss, playerclass, alive)
     if alive == False:
-        slowtype("")
         return playerclass.alive
 
 
@@ -190,12 +189,11 @@ def korsningen():
 
 def vägdecision():  # Väg val på de olika vägarna
     while True:
-        vägval3 = input("vill du vända tillbaka? Ja eller Nej -> ")
-        vägval3 = vägval3.upper()
+        vägval3 = input("vill du vända tillbaka? Ja eller Nej -> ").upper()
         try:
-            if vägval3 == "JA" or "YES":
+            if vägval3 == "JA" or vägval3 == "YES":
                 vägsvar = 1      # Player vill vända tillbaka
-            elif vägval3 == "NEJ" or "NO":
+            elif vägval3 == "NEJ" or vägval3 == "NO":
                 vägsvar = 2  # Vill Fortsätta
             return vägsvar
         except:
@@ -1006,10 +1004,7 @@ def skogsvägen(alive):
         monsterval = monsterpullar()
         alive = battle(monsterval, playerclass, alive)
         if alive == False: 
-            return playerclass.alive         # Alive ändras i battle func
-            # global adventuring
-            # adventuring = False
-            # return
+            return playerclass.alive         # Alive ändras i battle funktionen
     time.sleep(2)
     print("Efter fighten så fortsätter du in i den mörka skogen.")
     time.sleep(3)
@@ -1033,11 +1028,6 @@ def skogsvägen(alive):
         alive = battle(monsterval, playerclass, alive)
         if alive == False:          # Alive ändras i battle func
             return playerclass.alive
-        # global alive
-        # alive = False
-        # global adventuring
-        # adventuring = False
-        # return
     else:
         slowtype(
             "Du svarade inte korrekt och hinner därför inte reagera på det fallande trädet.", 0.05)
@@ -1064,12 +1054,13 @@ def skogsvägen(alive):
         alive = battle(monsterval, playerclass, alive)
         if alive == False:        # Alive ändras i battle func
             return playerclass.alive
+        
         slowtype("Efter ännu en till attack så känner du dig utmattad och fortsätter vandra med hopp om att du snart kommer ut ur denna läskiga skog.",0.05)
         slowtype("Efter ett långt äventyr så ser du ett glimmer från skogens kant och bestämmer dig för att gå denns håll.",0.05)
         slowtype("När du närmrar dig så inser du att det är en liten stuga.",0.05)
 
     while True:
-        Stuga_val = int(input("""      Vill du:
+        Stuga_val = int(input("""           Vill du:
             1. Inspektera stugan       2. Strunta i stugan och fortsätta vandra
     -> """))
         try: 
@@ -1083,8 +1074,8 @@ def skogsvägen(alive):
                 slowtype("Men hallå där! Säger Damen.", 0.05)
                 slowtype("H-hej, säger du osäkert tillbaks.",0.05)
                 slowtype("Vad gör en ung äventyrare som dig här ute i denna farliga skog? Undrar kvinnan.",0.05)   
-                damfråga = int(input("""                        Vad svarar du?
-    1. Skulle kunna fråga detsamma. 2. Inget för dig att veta! 
+                damfråga = int(input("""                           Vad svarar du?
+    1. Skulle kunna fråga detsamma.      2. Inget för dig att veta! 
     -> """))
                 if damfråga == 1:
                     slowtype("Om du inte redan visste det så bor jag här i stuga som du just snokade runt. Svarade Damen.",0.05)
@@ -1106,10 +1097,11 @@ def skogsvägen(alive):
                     slowtype("Varför bor du här ute? Frågar du damen.",0.05)
                     slowtype("Jag har alltid bott i dessa skogar. De är hela min barndom och jag kan inte få mig själv att flytta där ifrån. Det är också lungt dagarna om och jag slipper oftast personer som dig. Svarar damen", 0.05)
                     slowtype("Jahopp då. Får du ur dig.",0.05)
+                    slowtype("Jag gjorde min favoritgryta till middag, vill du ha? Frågar damen.",0.05)
                     time.sleep(1)
                             
-                    damfråga3 = int(input("""Jag gjorde min favoritgryta till middag, vill du ha? Frågar damen. Vad gör du?
-            1. Du tar villigt emot maten    2. Du avstår
+                    damfråga3 = int(input("""                   Vad gör du?
+            1. Du tar villigt emot maten        2. Du avstår
             -> """))
                     if damfråga3 ==1:
                         slowtype("Gärna! Säger du och tar emot en varm skål av grytan.",0.05)
