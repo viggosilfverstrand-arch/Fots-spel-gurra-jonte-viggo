@@ -745,9 +745,9 @@ def vägescape():  # Väg val på de olika vägarna
             print("Skriv om skriv rätt")
 
 def monsterpullar():
-    if playerclass.lvl < 5:
+    if playerclass.lvl < 4:
         monsterlista = monster_list1
-    elif playerclass.lvl >= 5 and playerclass.lvl < 10:
+    elif playerclass.lvl >= 4 and playerclass.lvl < 8:
         monsterlista = monster_list2
     else:
         monsterlista = monster_list3
@@ -1060,6 +1060,7 @@ def skogsvägen(alive):
         slowtype("Efter ett långt äventyr så ser du ett glimmer från skogens kant och bestämmer dig för att gå denns håll.",0.05)
         slowtype("När du närmrar dig så inser du att det är en liten stuga.",0.05)
 
+    
     while True:
         Stuga_val = int(input("""           Vill du:
             1. Inspektera stugan       2. Strunta i stugan och fortsätta vandra
@@ -1088,64 +1089,68 @@ def skogsvägen(alive):
                     slowtype("Jahopp, inget svar? Sa damen besviket.",0.05)
                 
                 slowtype("Kom in i min stuga, denna skog är inte säker under nätterna, dessutom ser det ut som att du behöver vila lite.",0.05)
-                
-                damfråga2 = int(input("""       Vad gör du?
+                while True: 
+                    damfråga2 = int(input("""       Vad gör du?
             1. Följer med damen in i stugan.   2. Säger nej och fortsätter att vandra i skogen.
             -> """))
-                if damfråga2 == 1:
-                    slowtype("Du följer med damen.",0.05)
-                    slowtype("Stugan är full med olika grejer, massor med olika växter och annat från skogen.",0.05)
-                    slowtype("Varför bor du här ute? Frågar du damen.",0.05)
-                    slowtype("Jag har alltid bott i dessa skogar. De är hela min barndom och jag kan inte få mig själv att flytta där ifrån. Det är också lungt dagarna om och jag slipper oftast personer som dig. Svarar damen", 0.05)
-                    slowtype("Jahopp då. Får du ur dig.",0.05)
-                    slowtype("Jag gjorde min favoritgryta till middag, vill du ha? Frågar damen.",0.05)
-                    time.sleep(1)
+                    try:   
+                        if damfråga2 == 1:
+                            slowtype("Du följer med damen.",0.05)
+                            slowtype("Stugan är full med olika grejer, massor med olika växter och annat från skogen.",0.05)
+                            slowtype("Varför bor du här ute? Frågar du damen.",0.05)
+                            slowtype("Jag har alltid bott i dessa skogar. De är hela min barndom och jag kan inte få mig själv att flytta där ifrån. Det är också lungt dagarna om och jag slipper oftast personer som dig. Svarar damen", 0.05)
+                            slowtype("Jahopp då. Får du ur dig.",0.05)
+                            slowtype("Jag gjorde min favoritgryta till middag, vill du ha? Frågar damen.",0.05)
+                            time.sleep(1)
                             
-                    damfråga3 = int(input("""                   Vad gör du?
+                            damfråga3 = int(input("""                   Vad gör du?
             1. Du tar villigt emot maten        2. Du avstår
             -> """))
-                    if damfråga3 ==1:
-                        slowtype("Gärna! Säger du och tar emot en varm skål av grytan.",0.05)
-                        slowtype("Vad är det för gryta? Frågar du.",0.05)
-                        slowtype("Det är bara ett simpelt recept på en kaningryta jag brukade äta när jag var liten. Svarade damen.",0.05)
-                        slowtype("Du villigt tar ett stort slurp ur grytan.",0.05)
-                        slowtype("WOW! Nästan skriker du ut.",0.05)
-                        slowtype("Vad är det pojk? Undrar damen.",0.05)
-                        slowtype("Detta är den bästa grytan jag någonsin ätit i hela mitt liv! Säger du till damen.",0.05)
-                        slowtype("Jag känner mig typ starkare!!! Skriker du glatt.",0.05)
-                        slowtype("Men vad roligt att du gil... försöker damen säga då hon blev avbruten av ett högt vrål.",0.05)
-                        slowtype("Det är nog dags att gå och lägga oss säger damen nervöst.",0.05)
-                        slowtype("Nästa dag vaknar du av att solen strålar i ditt ansikte",0.05)
-                        slowtype("Du går upp och hälsar på damen som redan står och lagar frukost.",0.05)
-                        slowtype("Det är nog dags för mig att gå min väg, men tack för att jag fick stanna här i natt. Säger du till damen.",0.05)
-                        slowtype("Innan du går! säger damen snabbt.",0.05)
-                        slowtype("Så vill jag ge dig en sak... fortsätter damen.",0.05)
-                        slowtype("Min man var en äventyrare innan han gick bort och han hade en styrkedryck som nu inte används.",0.05)
-                        slowtype("Jag tycker att du borde ta den om det kan hjälpa dig på något sätt.",0.05)
-                        slowtype("Du tar villigt emot drycken.",0.05)
-                        playerclass.add_item(3)
-                        slowtype("Tack. Säger du.",0.05)
-                        slowtype("Detta kan vara väldigt hjälpsamt.",0.05)
-                        slowtype("Du säger adjö till damen och går din väg.",0.05)
+                            if damfråga3 ==1:
+                                slowtype("Gärna! Säger du och tar emot en varm skål av grytan.",0.05)
+                                slowtype("Vad är det för gryta? Frågar du.",0.05)
+                                slowtype("Det är bara ett simpelt recept på en kaningryta jag brukade äta när jag var liten. Svarade damen.",0.05)
+                                slowtype("Du villigt tar ett stort slurp ur grytan.",0.05)
+                                slowtype("WOW! Nästan skriker du ut.",0.05)
+                                slowtype("Vad är det pojk? Undrar damen.",0.05)
+                                slowtype("Detta är den bästa grytan jag någonsin ätit i hela mitt liv! Säger du till damen.",0.05)
+                                slowtype("Jag känner mig typ starkare!!! Skriker du glatt.",0.05)
+                                slowtype("Men vad roligt att du gil... försöker damen säga då hon blev avbruten av ett högt vrål.",0.05)
+                                slowtype("Det är nog dags att gå och lägga oss säger damen nervöst.",0.05)
+                                time.sleep(2)
+                                slowtype("Nästa dag vaknar du av att solen strålar i ditt ansikte",0.05)
+                                slowtype("Du går upp och hälsar på damen som redan står och lagar frukost.",0.05)
+                                slowtype("Det är nog dags för mig att gå min väg, men tack för att jag fick stanna här i natt. Säger du till damen.",0.05)
+                                slowtype("Innan du går! säger damen snabbt.",0.05)
+                                slowtype("Så vill jag ge dig en sak... fortsätter damen.",0.05)
+                                slowtype("Min man var en äventyrare innan han gick bort och han hade en styrkedryck som nu inte används.",0.05)
+                                slowtype("Jag tycker att du borde ta den om det kan hjälpa dig på något sätt.",0.05)
+                                slowtype("Du tar villigt emot drycken.",0.05)
+                                playerclass.add_item(3)
+                                slowtype("Tack. Säger du.",0.05)
+                                slowtype("Detta kan vara väldigt hjälpsamt.",0.05)
+                                slowtype("Du säger adjö till damen och går din väg.",0.05)
 
                     
-                    elif damfråga3 ==2:
-                        slowtype("Jag kan avstå. Säger du.",0.05)
-                        slowtype("Skyll dig själv, mumlar damen.",0.05)
-                        slowtype("Du går istället och lägger dig efter en lång dag.",0.05)
-                        slowtype("Du går upp tidigt nästa morgon och drar iväg utan att säga adjö.",0.05)
-                    else:
-                        slowtype("Eftersom att du svarade tror jag att du inte vill ha. Antar damen",0.05)
-                        slowtype("Precis. Säger du ohyfsat.",0.05)
-                        slowtype("Du går sedan och lägger dig för att sova efter den långa dagen.",0.05)
-                        slowtype("Du vaknar tidigt nästa dag och går din väg utan att kolla tillbaka",0.05)
-                            
+                            elif damfråga3 ==2:
+                                slowtype("Jag kan avstå. Säger du.",0.05)
+                                slowtype("Skyll dig själv, mumlar damen.",0.05)
+                                slowtype("Du går istället och lägger dig efter en lång dag.",0.05)
+                                slowtype("Du går upp tidigt nästa morgon och drar iväg utan att säga adjö.",0.05)
+                            else:
+                                slowtype("Eftersom att du svarade tror jag att du inte vill ha. Antar damen",0.05)
+                                slowtype("Precis. Säger du ohyfsat.",0.05)
+                                slowtype("Du går sedan och lägger dig för att sova efter den långa dagen.",0.05)
+                                slowtype("Du vaknar tidigt nästa dag och går din väg utan att kolla tillbaka",0.05)
+                            break
                         
-                elif damfråga2 ==2:
-                    slowtype("Nej, svarar du och fortsätter gå utan att kolla tillbaka.",0.05)
-                        
-                else:
-                    print("Du gav inte ett giltigt svar, svara om.")
+                        elif damfråga2 ==2:
+                            slowtype("Nej, svarar du och fortsätter gå utan att kolla tillbaka.",0.05)
+                            break
+                        else:
+                            print("Du gav inte ett giltigt svar, svara om.")
+                    except:
+                        print("Du gav inte ett giltigt svar, svara om.")
                 break
             elif Stuga_val == 2:
                 slowtype("Du bestämmer dig för att struna i stugan och fortsätter att vandra genom den täta skogen.",0.05)
@@ -1163,6 +1168,7 @@ def skogsvägen(alive):
     return
 
 
+
 def abanondedcity(alive):
     slowtype("Efter ett tag kommer du fram till vad du tror är en helt vanlig stad.", 0.05)
     slowtype("Men du märker att någonting är fel.", 0.05)
@@ -1177,7 +1183,7 @@ def abanondedcity(alive):
     monsterval = monsterpullar()
     alive = battle(monsterval, playerclass, alive)
     if alive == False:        # Alive ändras i battle func
-        return playerclass.alive 
+        playerclass.alive 
     if vägdecision() ==1:
         print("Du bestämmer dig för att vända tillbaks.")
         return
@@ -1186,11 +1192,12 @@ def abanondedcity(alive):
     while True:
         trapporupellerner = int(input("""Vill du:
         1. Gå upp för trappan     2. Gå ner för trappan
+        ->
         """))
         try:
             if trapporupellerner == 1:
                 time.sleep(1)
-                slowtype("Du bestämde dig för att gå upp från trappan.", 0.05)
+                slowtype("Du bestämde dig för att gå upp för trappan.", 0.05)
                 slowtype("Denna våning verkar vara ett gammalt spelrum med otroligt många olika maskiner och kortspel.", 0.05)
                 slowtype("Du kollar på alla olika slotmachines och märker att en av dem skapar ett konstigt pling ljud.", 0.05)
                 slowtype("Du går fram till maskinen och bestämmer dig för att slå lite på den i hopp om att den kanske fortfarande fungerar.", 0.05)
@@ -1240,7 +1247,7 @@ def abanondedcity(alive):
         except:
             print("Du gav inte ett giltigt svar, svara om.")
     time.sleep(2)
-    print("Efter ett långt äventyr så blev du klar med att undersöka skyskrapan och du kan äntligen gå hem.")
+    print("Efter ett långt äventyr så blev du klar med att undersöka skyskrapan och du kan äntligen fortsätta din väg.")
     time.sleep(3)
     print("I det trista väderet går du över de sprukna gatorna.")
     time.sleep(2)
