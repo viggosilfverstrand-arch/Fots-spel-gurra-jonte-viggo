@@ -246,7 +246,7 @@ def Marknaden():
                 playerclass.weapon = Vapen
                 slowtype(f"Ditt nya vapen är ett Svärd!", 0.05)
             else:
-                slowtype("Du har inte tillräckligt med pengar", 0.05)
+                slowtype("Du har inte tillräckligt med guld", 0.05)
         elif köpval == "2":  #dolk
             if playerclass.money >= 20:
                 playerclass.amoney(-20)
@@ -260,7 +260,7 @@ def Marknaden():
                 playerclass.weapon = Vapen
                 slowtype("Ditt nya vapen är Smörkniv", 0.05)
             else:
-                slowtype("Du har inte tillräckligt med pengar", 0.05)
+                slowtype("Du har inte tillräckligt med guld", 0.05)
         elif köpval == "4":   #YXA
             if playerclass.money >= 40:
                 playerclass.amoney(-40)
@@ -268,7 +268,7 @@ def Marknaden():
                 playerclass.weapon = Vapen
                 slowtype("Ditt nya vapen är Yxa", 0.05)
             else:
-                slowtype("Du har inte tillräckligt med pengar", 0.05)
+                slowtype("Du har inte tillräckligt med guld", 0.05)
         elif köpval == "5":    #Knogjärn
             if playerclass.money >= 30:
                 playerclass.amoney(-30)
@@ -276,31 +276,31 @@ def Marknaden():
                 playerclass.weapon = Vapen
                 slowtype("Ditt nya vapen är Knogjärn", 0.05)
             else:
-                slowtype("Du har inte tillräckligt med pengar", 0.05)
+                slowtype("Du har inte tillräckligt med guld", 0.05)
         elif köpval == "6":
             if playerclass.money >= 10:
                 playerclass.amoney(-10)
                 playerclass.add_item(Item_list1[0])
             else:
-                slowtype("Du har inte tillräckligt med pengar", 0.05)
+                slowtype("Du har inte tillräckligt med guld", 0.05)
         elif köpval == "7":
             if playerclass.money >= 20:
                 playerclass.amoney(-20)
                 playerclass.add_item(Item_list1[1])
             else:
-                slowtype("Du har inte tillräckligt med pengar", 0.05)
+                slowtype("Du har inte tillräckligt med guld", 0.05)
         elif köpval == "8":
             if playerclass.money >= 30:
                 playerclass.amoney(-30)
                 playerclass.add_item(Item_list1[2])
             else:
-                slowtype("Du har inte tillräckligt med pengar", 0.05)
+                slowtype("Du har inte tillräckligt med guld", 0.05)
         elif köpval == "9":
             if playerclass.money >= 40:
                 playerclass.amoney(-40)
                 playerclass.add_item(Item_list1[3])
             else:
-                slowtype("Du har inte tillräckligt med pengar", 0.05)
+                slowtype("Du har inte tillräckligt med guld", 0.05)
         elif köpval == "q":
             os.system('cls' if os.name == 'nt' else 'clear')
             break
@@ -339,7 +339,7 @@ def spin_number():
 
 def slots():
     slowtype("Välkommen till slotsen", 0.05)
-    slowtype("Slots är ett awesome sätt att vinna pengar på", 0.05)
+    slowtype("Slots är ett awesome sätt att vinna guld på", 0.05)
     slowtype("Du måste få tre av samma nummer för att kamma in stor vinsten som är 50", 0.05)
     slowtype("varje spin kostar 5 guld", 0.05)
     while True:
@@ -361,7 +361,7 @@ def slots():
             else:
                 slowtype("Du förlora", 0.05)
         else:
-            slowtype("Du har för lite pengar", 0.05)
+            slowtype("Du har för lite guld", 0.05)
             break
     return
 
@@ -786,7 +786,7 @@ def battle(monsterval, playerclass, alive):
         slowtype(f"""Vad vill du göra?   Du har {playerclass.hp} hp,
         {monsterval.name} har {monsterval.hp} hp
         1. Attackera
-        3. Försök att fly """,0.02)
+        2. Försök att fly """,0.02)
         battlec = input("-> ")
 
         if battlec == "1":
@@ -841,11 +841,9 @@ def battle(monsterval, playerclass, alive):
             playerclass.alive = False
             return playerclass.alive
 
-
-
 def grottvägen(alive):
     slowtype("Efter att du har gått på stigen ett tag kommer du fram till en grott öppning.", 0.05)
-    time.sleep(2)
+    time.sleep(1)
 
     slowtype("Du kikar ner i den, grottan ser fuktig ut och har droppande stalaktiter.", 0.05)
     if vägdecision() == 1:  # Om man vänder så kommer man tillbaka till vägvalet
@@ -858,7 +856,7 @@ def grottvägen(alive):
         slowtype("Efter vad som känns som en evighet så stannar du äntligen", 0.05)
         slowtype("Du reser dig upp och kollar dig omkring", 0.05)
         slowtype("Du är i en lång rak grotta du inte kan se slutet på", 0.05)
-        time.sleep(2)
+        time.sleep(1)
         slowtype("I perferin ser du rörelser, du vänder dig snabbt om och ser någonting springa mot dig", 0.05)
         os.system('cls' if os.name == 'nt' else 'clear')
         monsterval = monsterpullar()
@@ -866,9 +864,9 @@ def grottvägen(alive):
         if alive == False:          # Alive ändras i battle func
             return playerclass.alive        # Om du dör så slutar funk köras
     slowtype("Efter du dödat monsteret går du vidare", 0.05)
-    time.sleep(3)  # import time
+    time.sleep(1)  # import time
     slowtype("Du hinner bara gå ett par minuter innan du hör något mullra, du vänder dig om och ser massor stenar rulla mot dig", 0.05)
-    time.sleep(5)
+    time.sleep(1)
     slowtype("Du lowkey ser ett samband i stenarna, nummrena 13 98 flashar i din hjärna", 0.05)
     time.sleep(5)  # Låter användaren kolla på nummrerna
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -923,9 +921,6 @@ def grottvägen(alive):
         alive = battle(monsterval, playerclass, alive)
         if alive == False:
             return playerclass.alive
-
-    slowtype("Du fick 15 guldmynt", 0.05)
-    playerclass.amoney(15)
 
     slowtype("Du går vidare fast du är trött", 0.05)
     slowtype("Långsamt börjar grottan bli torrare", 0.05)
@@ -1009,7 +1004,7 @@ def grottvägen(alive):
     time.sleep(2)
     slowtype("Solens ljus träffar ditt ansikte, och du andas den friska luften", 0.05)
     time.sleep(1)
-    slowtype("Grattis, du överlevde Grottvägen! Som belöning får du 50 mynt och exp.", 0.05)
+    slowtype("Grattis, du överlevde Grottvägen! Som belöning får du 50 guld och exp.", 0.05)
     playerclass.amoney(50)
     playerclass.add_exp(50)
     
@@ -1183,7 +1178,7 @@ def skogsvägen(alive):
     slowtype("Efter ännu ett tag av vandrande känner du att vinden blir starkare och starkare och framför dig ses en öppning mellan träden.",0.05)
         
     slowtype("Du har äntligen kommit ut ur den täta skogen och du kan nu fortsätta ditt äventyr starkare än någonsin.",0.05)
-    slowtype("Grattis, du överlevde Skogsvägen! Som belöning får du 50 mynt och exp.",0.05)
+    slowtype("Grattis, du överlevde Skogsvägen! Som belöning får du 50 guld och exp.",0.05)
     playerclass.amoney(50)
     playerclass.add_exp(50)
     playerclass.skog = True
@@ -1224,7 +1219,7 @@ def abanondedcity(alive):
                 slowtype("Du kollar på alla olika slotmachines och märker att en av dem skapar ett konstigt pling ljud.", 0.05)
                 slowtype("Du går fram till maskinen och bestämmer dig för att slå lite på den i hopp om att den kanske fortfarande fungerar.", 0.05)
                 slowtype("Helt plötsligt så börjar den spela ett högt ljud och en lucka öppnar sig.", 0.05)
-                slowtype("Ut kom runt 40 mynt, det värkar vara din lyckodag!", 0.05)
+                slowtype("Ut kom runt 40 guld, det värkar vara din lyckodag!", 0.05)
                 slowtype("Du plockar upp mynten och går din väg.", 0.05)
                 playerclass.amoney(40)
                 break
@@ -1313,7 +1308,7 @@ def abanondedcity(alive):
             slowtype("Du gav inte ett giltigt svar, svara om.", 0.05)
     
     slowtype("Efter denna otroligt långa och spännande turen genom staden så kan du äntligen fortsätta frammåt och besegra alla som kommer i din väg.",0.05)
-    slowtype("Grattis, du överlevde Stadsvägen! Som belöning får du 50 mynt och exp.", 0.05)
+    slowtype("Grattis, du överlevde Stadsvägen! Som belöning får du 50 guld och exp.", 0.05)
     playerclass.amoney(50)
     playerclass.add_exp(50)
     playerclass.city = True
@@ -1534,6 +1529,7 @@ def main(alive):
             casion()
         elif Platsval == "6":
             save_player(playerclass)   
+            slowtype("Sparningen lyckades",0.1)
         else:
             pass
 
