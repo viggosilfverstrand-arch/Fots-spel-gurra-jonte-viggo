@@ -54,6 +54,7 @@ sandworm = Monster("Sandworm", 124, 24, 1)
 Boss = Monster("The king of darkness", 600, 100, 1)
 SkelettRaptor = Monster("Skelett Raptor", 100, 30, 1)
 LevandeTräd = Monster("Levande Träd",150,20,1 )
+FiskMänniska =Monster("FiskMänniska",100,25,1)
 # Gameplay
 
 def slowtype(text, tid):
@@ -914,11 +915,10 @@ def grottvägen(alive):
         slowtype("En stor guldtand, intryck i en glipa", 0.05)
         slowtype("Den här kan nog vara värd en kosing tänker du", 0.05)
     else:
-        slowtype("Du forsäter gå framåt", 0.05)
+        slowtype("Du fortsätter gå framåt", 0.05)
         slowtype("Rarariarar!", 0.05)
         slowtype("Någonting drar dig ner under vattnet", 0.05)
-        monsterval = monsterpullar()
-        alive = battle(monsterval, playerclass, alive)
+        alive = battle(FiskMänniska, playerclass, alive)
         if alive == False:
             return playerclass.alive
 
