@@ -9,10 +9,10 @@ from spara import *
 import os
 
 # Characters
-tank = Characterclass("Mr.Tank", 200, 15, 0.1, 2)   # Eftersom hp är en attribut som inte har ett tak och som man kan förlora. Så förhållanden i gubbarna hp och Dmg
-warrior = Characterclass("Warrior", 100, 20, 0.15, 2)  # Inte vara proportionelig. T.ex. så blir man av med hp varje battle som man sedan måste köpa i affären
+tank = Characterclass("Mr.Tank", 200, 18, 0.1, 2)   # Eftersom hp är en attribut som inte har ett tak och som man kan förlora. Så förhållanden i gubbarna hp och Dmg
+warrior = Characterclass("Warrior", 125, 23, 0.15, 2)  # Inte vara proportionelig. T.ex. så blir man av med hp varje battle som man sedan måste köpa i affären
 magi = Characterclass("Magician", 60, 30, 0.2, 2)    # Eftersom hp boost för all genom köp av poitions i makrnaden är points och inte % av start hp eller ett hp tak
-gambler = Characterclass("Gambler", 100, 1, 0.3, 200)  # Däför är en högre INITIAL dmg / hp generelt att föredra. Eftersom det låte dig scale bättre late game
+gambler = Characterclass("Gambler", 100, 1, 0.3, 250)  # Däför är en högre INITIAL dmg / hp generelt att föredra. Eftersom det låte dig scale bättre late game
                                                        # Genom den exponentiell öking av stats genom lvl upp bidrar till att den oförändrade dmg staten scalar bättre
                                                       # Än dmg som ibland kan vara låg pga battle. Detta är flaw som jag känner till. Vilket gör om man timear lvl dåligt
                                                    # Så kan man inte uttnyttja hp lvl up bra.
@@ -39,14 +39,14 @@ monster_list1 = [Monster("Skeleton", 40, 20, 1),
                  Monster("Goon", 35, 20, 1),
                  Monster("Bandit", 50, 13, 1)]
 
-monster_list2 = [Monster("Demon", 175, 28, 1),
-                 Monster("Troll", 250, 18, 1),
-                 Monster("Vandrande Själ", 100, 35, 1),
-                 Monster("Varulv", 200, 23, 1)]
+monster_list2 = [Monster("Demon", 150, 26, 1),
+                 Monster("Troll", 200, 18, 1),
+                 Monster("Vandrande Själ", 75, 35, 1),
+                 Monster("Varulv", 175, 23, 1)]
 
-monster_list3 = [Monster("Jätte", 400, 35, 1),
-                 Monster("Drake", 300, 45, 1),
-                 Monster("Golem", 450, 20, 1)]
+monster_list3 = [Monster("Jätte", 300, 35, 1),
+                 Monster("Drake", 250, 45, 1),
+                 Monster("Golem", 400, 20, 1),]   # Han är en dyr modell
 
 sandworm = Monster("Sandworm", 124, 24, 1)
 Boss = Monster("The King of Darkness", 600, 100, 1)
@@ -87,7 +87,7 @@ while True:
         För en Warrior är varje strid en chans att bevisa att viljekraft alltid är starkare än ödet
         
         HP: 5/10    Dmg: 5/10   Critrate: 10%   Crit multiplier: 2x
-        """, 0.01)
+        """, 0.005)
         input("Tryck enter för att fortsätta -> ")
     elif infosvar == "2":
         slowtype("""
@@ -97,7 +97,7 @@ while True:
         De vandrar världen i jakt på ny kunskap – och på att kontrollera de krafter som lika gärna kan förgöra dem som deras fiender.
         
         HP: 4/10    Dmg: 6/10   Critrate: 20%   Crit multiplier: 2x
-        """, 0.01)
+        """, 0.005)
         input("Tryck enter för att fortsätta -> ")
     elif infosvar == "3":
         slowtype("""
@@ -108,7 +108,7 @@ while True:
         Deras styrka kommer inte bara från muskler, utan från en oböjlig vilja som vägrar låta någon falla bakom dem.
         
         HP: 9/10    Dmg: 3/10   Critrate: 10%   Crit multiplier: 2x
-        """, 0.01)
+        """, 0.005)
         input("Tryck enter för att fortsätta -> ")
     elif infosvar == "4":
         slowtype("""
@@ -120,13 +120,13 @@ while True:
         Gambler vandrar mellan bord, tavernor och slagfält, alltid jagad av lyckans nyckfulla hand.
         
         HP: 5/10    Dmg: 1/10   Critrate: 30%   Crit multiplier: 200x
-        """, 0.01)
+        """, 0.005)
         input("Tryck enter för att fortsätta -> ")
     elif infosvar == "5":
         slowtype(""" 
           Classes:
           1. Warrior               3. Tank
-          2. Magiacan              4. Gambler
+          2. Magician              4. Gambler
           """, 0.01)
         
         val = (input("Vilken karaktär vill du välja? "))
@@ -159,8 +159,8 @@ while True:
     else:
         slowtype("skriv ett tal", 0.05)
 if loaded == False:
-    playername = input("Vad ska din karaktär heta? ")
-    slowtype(f"Du valde namnet {playername}!", 0.05)
+    playerclass.pname = input("Vad ska din karaktär heta? ")
+    slowtype(f"Du valde namnet {playerclass.pname}!", 0.05)
     input("Tryck enter för att fortsätta -> ")
     os.system('cls' if os.name == 'nt' else 'clear')
     playerclass.weapon = Hands
@@ -173,12 +173,12 @@ def the_final_struggle(alive):
     slowtype("Träden vajar och blixtar slår ner runt omkring dig",0.08)
     time.sleep(2)
     slowtype("Plöstlsigt så öppnas marken framför dig",0.08)
-    slowtype(f"\" {playername} du har irriterat mig länge nu \"",0.08)
-    slowtype(" \"Du har besegrat alla mina undersåtar... Men inte mej  \"",0.08)
+    slowtype(f"\" {playerclass.pname} du har irriterat mig länge nu \"",0.08)
+    slowtype(" \"Du har besegrat alla mina undersåtar... Men inte mig  \"",0.08)
     slowtype(" \"Jag är kungen av mörkret och du förtjänar att dö!   \"",0.08)
     alive = battle(Boss, playerclass, alive)
     if alive == False:
-        return playerclass.alive
+        return alive
 
 
 def korsningen():
@@ -197,7 +197,7 @@ def korsningen():
         else:
             slowtype(f"Du går stig {vägval}", 0.05)
     else:
-        slowtype("Du går in i en skog och vägen försvinner bakom dig, efter ett tag ser tre stigar", 0.05)
+        slowtype("Du går in i en skog och vägen försvinner bakom dig, efter ett tag ser du tre stigar", 0.05)
         time.sleep(2)
         vägval = input(
             "1 = Vänster , 2 = Fram, 3 = Höger -> ")
@@ -207,7 +207,8 @@ def korsningen():
 
 def vägdecision():  # Väg val på de olika vägarna
     while True:
-        vägval3 = input("Vill du vända tillbaka? Ja eller Nej -> ").upper()
+        vägval3 = input("Vill du vända tillbaka? Ja eller Nej -> ")
+        vägval3=vägval3.upper()
         try:
             if vägval3 == "JA" or vägval3 == "YES":
                 vägsvar = 1      # Player vill vända tillbaka
@@ -219,7 +220,7 @@ def vägdecision():  # Väg val på de olika vägarna
             slowtype("Gör om gör rätt", 0.05)
 
 def Marknaden():
-    slowtype("välkommen till marknaden", 0.05)
+    slowtype("Välkommen till marknaden", 0.05)
     while True:
         
         slowtype(f""" Vad vill du kolla på?        Du har {playerclass.money} guld
@@ -230,8 +231,8 @@ def Marknaden():
             5. Knogjärn      Damage: 1.2x     Crit factor: 25%    Pris: 30 guld
 
         Items: 6. Small Health Potion    + 15 Hp            Pris: 10 guld
-               7. Medium Helth Potion    + 30 Hp            Pris: 20 guld       OBS!!! Du kan bara heala i menyn
-               8. Big Health Potion      + 60 Hp            Pris: 30 guld
+               7. Medium Health Potion    + 30 Hp            Pris: 18 guld       OBS!!! Du kan bara heala i menyn
+               8. Big Health Potion      + 60 Hp            Pris: 35 guld
                9. Damage boost           10 % Damage boost  Pris: 40 guld
 
                q. Lämna affären
@@ -283,14 +284,14 @@ def Marknaden():
             else:
                 slowtype("Du har inte tillräckligt med guld", 0.05)
         elif köpval == "7":
-            if playerclass.money >= 20:
-                playerclass.amoney(-20)
+            if playerclass.money >= 18:
+                playerclass.amoney(-18)
                 playerclass.add_item(Item_list1[1])
             else:
                 slowtype("Du har inte tillräckligt med guld", 0.05)
         elif köpval == "8":
-            if playerclass.money >= 30:
-                playerclass.amoney(-30)
+            if playerclass.money >= 35:
+                playerclass.amoney(-35)
                 playerclass.add_item(Item_list1[2])
             else:
                 slowtype("Du har inte tillräckligt med guld", 0.05)
@@ -708,7 +709,7 @@ def Quiz():
             slowtype("It appears that you have answerd all questions we have...",0.05) 
             return                               # Går att runda genom att load saven så kommer fråde omställas
         ras = rand.randint(5,8)
-        qr = rand.randint(5,7)
+        qr = rand.randint(0,19)
         if qr in fråde:
             continue
         if antalr >= ras:
@@ -766,10 +767,10 @@ def vägescape():  # Väg val på de olika vägarna
 def monsterpullar():
     if playerclass.lvl < 4:
         monsterlista = monster_list1
-    elif playerclass.lvl >= 4 and playerclass.lvl < 8:
-        monsterlista = monster_list2
-    else:
+    elif playerclass.lvl >= 7:
         monsterlista = monster_list3
+    elif playerclass.lvl >= 4:
+        monsterlista = monster_list2
     monsterval = rand.choice(monsterlista)
     slowtype(f"Du ser monstret {monsterval.name}", 0.1)
     time.sleep(1)
@@ -832,13 +833,13 @@ def battle(monsterval, playerclass, alive):
         slowtype(f"{monsterval.name} attackerar dig och gör {monsterval.dmg} skada!", 0.02)
         playerclass.hp -= monsterval.dmg
         slowtype(f"Nu har du {playerclass.hp}hp kvar", 0.02)
-        time.sleep(3)
+        input("->")
         os.system('cls' if os.name == 'nt' else 'clear')
 
         if playerclass.hp <= 0:
             slowtype("Du blev besegrad av monstret!", 0.1)
             playerclass.alive = False
-            return playerclass.alive
+            return alive
 
 def grottvägen(alive):
     slowtype("Efter att du har gått på stigen ett tag kommer du fram till en grott öppning.", 0.05)
@@ -853,6 +854,7 @@ def grottvägen(alive):
         slowtype("Plöstlsigt halkar du till och ramlar", 0.05)
         slowtype("Du tumlar neråt, det gör ont,", 0.05)
         slowtype("Efter vad som känns som en evighet så stannar du äntligen", 0.05)
+        input("->")
         slowtype("Du reser dig upp och kollar dig omkring", 0.05)
         slowtype("Du är i en lång rak grotta du inte kan se slutet på", 0.05)
         time.sleep(1)
@@ -861,7 +863,7 @@ def grottvägen(alive):
         monsterval = monsterpullar()
         alive = battle(monsterval, playerclass, alive)
         if alive == False:          # Alive ändras i battle func
-            return playerclass.alive        # Om du dör så slutar funk köras
+            return alive        # Om du dör så slutar funk köras
     slowtype("Efter du dödat monsteret går du vidare", 0.05)
     time.sleep(1)  # import time
     slowtype("Du hinner bara gå ett par minuter innan du hör något mullra, du vänder dig om och ser massor stenar rulla mot dig", 0.05)
@@ -881,9 +883,6 @@ def grottvägen(alive):
         slowtype(f"Du har nu {playerclass.hp} hp", 0.05)
         input("Tryck enter för att fortsätta ->")
         os.system('cls' if os.name == 'nt' else 'clear')
-
-
-    slowtype(str(playerclass.money), 0.05) 
     slowtype("Efter stenraset går du vidare", 0.05)
     slowtype("Efter ett tag kommer du till en korsning", 0.05)
     slowtype("En skylt sitter uppsatt, på den står det", 0.05)
@@ -919,14 +918,54 @@ def grottvägen(alive):
         slowtype("Rarariarar!", 0.05)
         slowtype("Någonting drar dig ner under vattnet", 0.05)
         slowtype(f"Du ser monstret Fisk Människa", 0.1)
+        slowtype("""
+⠿⡼⢳⢯⡿⣽⣛⣎⣳⣭⣞⣶⣳⣤⢦⣴⣿⣏⢯⣙⡾⣵⢊⠶⢦⠞⠳⢴⣶⡄⠀⠰⣶⣦⠀⠀⠀⠀⠉⠠⠀⠈⠤⣴⣶⣶⣶⣶⣶⣶⣶⣶⣶⣄⠀⠀⣤⣶⠊⠁⠀⠀⠀⢀⠀⠀⠀⣉⠈⠉⠉⠁⠀⠈⠁⠀⠈⢻⣌⠇⣛⠧⣹⠳⠄⢛⡈⠁⡀⠄⡙⠛⡶⢭⠶⣀⣋⢀⡁⡁⠼⠧⣘⣳⠽⣛⢯⡙⣭⠻⡕⠚⠛⠻⠯⢟⣹⣎⢯⠛
+⣑⣬⣣⢎⡴⣥⠭⡌⢥⡹⡜⡜⠣⠎⠇⣿⣿⡟⠋⡁⠓⠈⡁⠠⠈⠀⠀⡼⠛⠃⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⣽⣿⡟⠻⣏⣩⠿⠛⠛⠋⠋⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⢀⡠⠤⠋⠋⠓⠒⠛⠓⠀⠰⠤⠄⠀⠈⠛⠋⠛⠚⠳⢤⡬⣝⠃⠛⠃⠬⠷⠼⢳⣏⠿⣭⠾⣵⢫⠖⡾⢥⣤⡑⣌⠢⣉⠄⡁⠤⠬⡔⠂⠒⠉⠓⠬⡷⢶
+⣭⣡⠉⠍⠙⠈⠒⠈⠂⠁⠉⠈⠄⢀⠀⣿⣿⡇⠀⢀⠀⠁⡀⠐⠀⠄⠂⣥⣤⡄⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠰⢿⣿⡇⠀⠈⠁⠀⠀⠀⠀⢀⣠⠞⢻⣿⠀⣀⣤⠴⠒⣩⣥⣤⣤⣄⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣶⣶⡀⠀⠀⠀⠀⣶⣤⢀⣠⣤⣦⣤⣀⠀⠈⠉⠀⠃⣨⣤⣬⣤⣿⣷⣏⡘⠳⠘⠮⠱⣎⠴⣲⡙⡞⢲⠫⠜⣀⠃
+⢂⣡⡈⢀⠂⠁⡀⠂⠁⠈⡀⠁⠀⠂⠀⣿⣿⣏⡐⠢⠌⡐⠐⠈⠀⠄⠀⣼⣿⡇⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⣹⣿⣇⣤⣀⣀⣀⣀⣀⣀⣈⠀⠀⣾⣿⠁⠁⠀⣴⣿⡿⠛⠋⠛⢿⣿⣦⠀⠀⠀⣿⣿⣿⠿⠛⠛⠻⣿⣷⣄⠈⠁⢿⣿⣿⠿⠛⠛⠿⣿⣿⡅⠉⠁⣶⣿⡿⡟⠛⠛⠿⣿⣿⡄⠀⡀⢁⢂⠒⠤⡉⡝⠲⣎⠷⢲⠞
+⠀⠀⠈⠑⠲⠖⣶⣡⣊⣄⣠⠘⣬⢋⠇⣿⣿⡧⠈⠄⢀⠠⠀⠀⠄⠀⡀⣻⣿⡀⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡿⠿⠿⠿⠿⠿⠿⠏⠀⠀⠀⢿⣿⠀⠀⣼⣿⡟⠀⠀⠀⠀⠀⢹⣿⣇⠀⠀⣿⣿⠁⠀⠀⠀⠀⢹⣿⡇⠀⠀⣿⣿⠃⠀⠄⠠⠀⢹⣿⣷⠀⢀⠛⠋⠁⠀⠁⣀⣠⣿⣿⡏⠑⠁⢂⠠⠈⠔⠒⠈⠁⡀⠠⠁⠈
+⢤⠬⡴⢦⡕⣚⢤⡡⢥⡌⣄⡙⢢⠉⠂⣿⣿⡇⠀⠈⠀⠀⠀⠀⢀⠀⠀⣿⣿⡆⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⣿⣿⡄⠀⠀⠀⠀⠀⢰⣿⣿⠀⠀⣿⣿⠀⠀⠠⠀⠀⢘⣿⣿⠀⠀⣿⣿⠀⠀⢀⠐⠀⢸⣿⣿⠀⠀⣴⣾⣿⣿⡿⠿⠟⣿⣿⡇⠀⠌⢀⠀⠢⠤⠦⠱⠘⠴⢁⢆⣁
+⣽⢾⡵⢮⠼⡍⢶⡱⢦⡹⢬⡍⣄⠠⠄⣿⣿⣇⣀⠂⠁⡀⠁⠠⠀⠈⠀⣻⣿⡁⠀⢀⣿⣿⠀⠀⠐⠀⠀⠂⠀⠀⠈⣽⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⠀⠀⠹⣿⣧⠀⠀⠀⠀⠀⣸⣿⡏⠀⠀⣿⣿⡄⠀⠐⠀⠀⣼⣿⡇⠀⠐⣿⣿⣆⠀⢀⠀⠀⣸⣿⡟⠀⢺⣿⣿⠉⡒⢀⡠⣀⣿⣿⡇⠉⡀⠆⠲⠐⢂⠐⠂⠒⠤⠤⡜⠚
+⣭⣥⣚⠴⡒⠒⠦⡐⠀⠉⠀⠈⠀⠉⠁⣿⣿⣿⣾⣿⣿⣿⣿⣷⣶⡁⠀⣿⣿⡇⠀⠸⣿⣿⠂⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⡄⠀⠀⠙⢿⣷⣶⣤⣴⣾⡿⠟⠀⠀⠀⣿⣿⣿⣦⣤⣴⣾⡿⠛⠀⠈⠀⣿⣿⣿⣷⣶⣶⣿⣿⠟⠀⠠⠹⣿⣿⣷⣽⣭⣿⣿⣿⣿⣿⠛⠐⢆⢦⡱⢦⠲⣌⣖⠲⠶⢤⣉
+⠷⡞⢶⣣⠴⢇⣖⣠⣉⣍⣉⣁⣉⠂⠉⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠁⡀⠛⠋⠉⠠⠜⠛⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠛⠓⠀⠀⡄⠀⠀⠀⠀⢀⠴⢃⣄⡀⢥⣀⣀⣀⠀⠈⠛⠙⠛⠉⠠⠀⠀⠀⢠⣿⣿⠀⠉⠛⠋⠉⠀⠀⠀⠀⠸⣿⣿⡆⠙⠛⠛⢉⠀⠠⠈⢀⠀⡀⠙⠛⠛⠛⠛⣡⠜⣛⠛⢤⢂⣈⣀⣉⢆⡶⡰⠎⠻⣹⢧⠻
+⣤⣄⡠⢈⠙⠌⡘⠠⣉⠀⠤⠤⡤⢋⠙⠉⡐⢂⠠⣀⢂⣁⡐⠠⠀⢀⠀⠀⡀⠀⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠄⠀⠀⠀⠀⠀⢀⡴⡋⠂⠉⠠⠄⠀⠀⠒⠒⠒⠈⠓⢳⡄⠙⠂⠀⠀⣿⣿⠀⠀⠠⠄⠀⢀⠤⠖⣒⠒⣿⣿⠆⡤⠀⠂⢀⠂⠔⡑⢂⠒⣀⠂⠆⠓⡤⢛⡴⣛⢮⣝⣎⡙⡌⠶⣉⢮⡱⡓⢏⡳⣅⢢⠁
+⣝⡺⣝⣏⠾⣴⢮⡵⣤⢋⣆⠳⢦⡍⠎⠑⢈⠂⠄⡀⢀⠀⠀⠀⠐⠀⡀⠁⠀⠄⠂⠀⠂⠠⠀⢀⠠⠀⠀⠠⠀⠀⠀⠀⢀⡔⠃⠀⠀⠀⠀⠐⣲⠟⣡⡐⢀⣰⠂⠀⠀⠀⠀⠀⠀⠀⠀⣼⠈⠦⠀⠀⠘⠛⠛⠂⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠛⠛⠃⠀⠈⠀⠚⠒⠠⠆⠤⢀⠓⠀⠓⠘⠃⠠⠡⢆⣌⣈⢡⠒⠶⡜⣦⢳⡝⣮⢵⣋⢧⢛
+⠞⡵⣫⢞⡹⡜⡲⢹⡌⢯⠜⢏⠳⡘⡙⠎⠡⠋⠒⠡⢂⠜⡀⠐⠈⡀⠠⠀⢂⠀⠄⠐⠀⡀⠀⠀⡀⠀⠄⠀⠀⠀⠰⠚⠁⠀⠀⠀⠀⣀⣤⣾⠏⣞⡴⣡⣿⣃⠖⡤⢂⡄⠀⠀⣀⡤⠞⣿⠀⠀⠀⠀⠋⠡⠤⠞⠁⠀⠀⠐⠀⠁⠠⠀⠄⢈⠀⠊⠁⡐⠌⠠⡁⠄⠠⠀⠄⢠⠀⠌⠀⠂⠐⠀⠄⢢⡰⣉⠖⣣⠶⣜⡴⣋⡜⣳⢫⡝⡞⢯
+⠾⣴⢋⣞⡱⣉⠟⣥⣘⣡⠊⢆⡱⠐⠑⠊⠑⠉⠋⠓⠈⡀⠄⠈⢀⠀⠄⠁⠀⠠⠀⡀⢀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠴⢋⣭⠟⣡⢛⠬⢻⡝⣧⣛⠾⣵⣫⢖⣱⡞⣩⠠⣤⣿⡁⠀⠈⠒⠀⠀⠀⠀⠀⠀⠀⠂⠄⠠⠀⠄⠀⠀⡀⠂⠄⢀⠠⠀⡀⠄⡁⠘⡐⠂⡐⠀⠂⠔⠨⠙⡘⢣⠵⣎⢿⣡⢏⣔⣢⢡⡈⢁⠉⠉⠩⢳
+⡴⢤⡤⣆⣱⡰⢎⡤⡤⣄⢋⠓⠈⠉⠁⠓⢆⡲⡄⢆⠰⢀⠠⠈⠀⠄⠂⠈⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⠴⢛⣡⠴⢋⠂⠍⢤⠩⢌⠣⠜⡤⣉⡛⢶⡹⢎⡿⡽⡶⣽⣦⣿⠙⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠂⠀⠌⠐⡀⠂⠄⠂⠤⠐⠠⠔⠠⠱⢤⠳⢰⡌⡒⠌⠣⠧⡑⢣⠔⡤⢢⠴⠮⠴⣎⠷⡹⢦⣏⢟⡹⠣
+⣛⢳⡛⣬⢥⡭⠞⡴⠙⣜⠺⡖⡳⢎⢳⡙⢦⣀⠐⠀⠠⠀⠀⠄⠁⠀⠂⠈⠐⠈⠀⠂⠐⠀⠂⠐⠀⠂⢀⣤⡴⠞⣫⡴⠚⠉⠁⠆⡁⣼⡴⠶⠛⠶⠷⣼⣤⠱⡘⢆⢇⣋⠶⡹⢽⠶⣧⣿⡄⢳⡀⠀⠀⠀⠀⠀⠀⠁⠀⢈⠀⡀⠄⠠⠀⠂⠀⠄⠂⠐⠀⡐⠀⠄⠂⢄⠠⠠⠄⠠⠑⢊⠓⡒⢩⢆⡋⠖⣋⠚⠒⠓⡐⢂⡁⢂⢈⢠⢓⡳
+⣽⡲⡽⢶⢳⠲⣞⢲⡛⢦⡓⡴⢡⡉⣬⢉⡀⠉⠈⠂⢁⠠⠁⠂⠠⠁⠐⠈⡀⠄⠁⡀⠂⠁⠠⠁⢀⡴⢋⡵⠚⠋⠁⠀⠀⠀⠈⣔⡾⠁⣴⡀⠀⠀⠀⠀⠘⣷⡘⢌⡒⢌⡚⡵⢋⣮⡐⠻⣧⠸⡅⠀⠀⠀⠀⠀⠀⠀⢀⠀⡀⠀⢀⠂⠁⡈⢄⡐⠠⠁⡄⡡⢍⠤⣃⠄⡂⠑⡒⠲⣄⢂⡁⢈⠀⠠⠘⠒⢡⠋⡽⣩⢳⡍⢾⡱⣋⠟⡺⣵
+⠷⡻⣝⢮⣳⡟⣶⢣⣛⢧⡛⠵⣣⢍⡔⠫⠜⡙⠲⢄⢂⡀⠔⣀⠁⠠⠁⠠⠀⡀⠂⠀⡀⠁⢀⣤⠟⣰⠟⠀⠀⠀⠀⠀⠀⢄⡱⡾⠃⠸⡿⠋⠀⠀⠀⠀⠀⠘⣿⡦⢘⠤⢣⠱⣩⠐⡻⢦⡈⠻⣷⠀⠀⠀⠄⠀⠂⢀⠀⠀⠄⠐⠀⠄⠠⠀⡀⠠⠁⢂⢀⠐⠈⡄⣁⣈⢄⠣⣔⣣⣌⠧⣜⣡⢎⠖⠲⠝⠶⣌⠳⣍⢳⢮⣅⡲⣔⣎⡵⣒
+⠿⠱⠋⠟⣦⢹⡜⣩⠏⣞⠹⣓⠷⣎⡹⣉⠝⣌⠣⣈⠂⡉⠲⡀⠌⡀⠄⡁⠠⠀⠤⠁⣴⡴⠟⢁⡼⠃⠀⠀⠀⠀⠀⢀⠰⢨⡇⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⡝⣦⢉⢆⠳⢀⠉⠔⠉⠻⣆⠉⢳⡄⠀⠀⠂⠀⢀⠠⠀⠠⠈⠀⡐⠀⡁⢀⠒⠬⣀⠄⣈⢒⢬⠲⣉⠎⣙⡈⡑⢎⠶⠤⠤⠎⡙⠋⠙⠊⠌⠓⠌⡋⢞⣌⢳⣩⢎⡷⣩
+⣟⢷⣮⢷⣬⢳⡼⣱⡞⣬⡳⣭⢶⡣⢗⡬⠜⡤⡐⠄⢦⠱⡁⠄⠡⠀⠄⠠⠐⠀⣴⠟⣍⢀⡴⠛⠀⠀⢀⠀⠈⠀⠄⠢⢡⢇⣿⣌⢧⡀⠀⠀⠀⠀⠀⢀⣀⣼⡯⣜⣷⠎⣌⠒⡄⠀⠀⠀⠀⠈⢷⡄⠛⣦⠀⢀⠀⠠⠀⡐⠀⠄⠁⠤⠐⠠⠁⠊⡔⢡⠛⡬⢍⠆⠳⡘⠞⡤⢆⡁⢀⠈⠐⡀⠂⢀⡐⡒⣖⡒⣖⢦⡹⣎⡞⣧⢏⡿⣜⣳
+⣯⣞⣬⣳⢎⣧⡽⣥⢎⣥⠽⣤⣣⢍⠦⡜⣩⢔⡠⢌⡠⢁⠈⡀⠂⡅⢀⠂⠈⠄⠺⣦⡠⠟⠀⠀⠀⠁⠂⢀⠀⠂⠈⠀⡐⢎⠾⣿⣮⣇⡘⢤⠶⣒⢛⣋⣭⣿⣷⡿⣏⡻⢤⢋⡜⣑⠢⡄⠀⠀⠀⠹⣆⠈⢧⡀⠠⠁⠀⠄⠐⢀⠈⢀⠐⠀⠁⡁⢌⠦⣙⡜⢣⠎⡑⣈⢤⡱⣌⠬⢧⠛⢧⢓⡹⢦⠯⡵⢎⡹⣬⢳⡝⣮⣝⣮⢻⡼⣝⡾
+⣟⡾⣼⣥⢻⡜⡵⣚⠾⣬⠳⣆⣡⣈⡡⢱⠡⢎⡔⢣⠜⡡⢚⠠⡑⠜⠢⠌⣐⣬⡾⠋⠀⠀⠀⠈⠙⠛⠛⢦⣄⠀⠀⠀⠁⢌⠻⣽⣻⢿⣿⣿⣿⣿⣿⣿⣿⡿⣯⡟⡵⢯⢧⡏⡴⢣⡓⣜⢣⠀⡀⠀⠈⢷⡈⢳⡀⠀⠄⢀⠈⠀⠄⡂⣤⣼⣐⢌⣢⣁⢆⡸⠡⠖⠱⠊⢣⢁⣀⣄⣠⣠⢄⡲⣔⠶⣲⢱⢫⡕⢫⢛⡼⣳⢮⣳⢯⡽⢾⣹
+⣟⣞⡳⢎⡷⣹⢶⣹⡲⣤⠶⠤⣆⢬⣑⣃⠷⣨⠜⣦⢲⢡⢆⣂⠡⡆⠢⣴⣿⡟⠀⢀⣀⣀⣀⣀⣀⠀⠀⠀⠈⠳⡄⠀⠀⡌⢳⢥⣏⢿⡾⣽⢯⡿⣽⣳⢯⣟⣷⣻⡽⢯⣷⣫⣽⡳⡽⣬⣓⠲⡐⠠⠀⠀⢳⡄⢻⣄⠀⠂⠠⢈⣀⣦⣤⠶⠿⣏⣁⠀⠊⣁⠱⢪⡑⢏⢣⢋⠶⣌⢣⣉⡎⡵⢎⡻⢥⣏⡳⣜⡏⠿⣼⣱⣎⡵⣎⣞⣯⢷
+⡛⠾⡙⢯⡚⡵⢦⡤⣵⣜⣋⡛⣊⠇⠦⠬⡔⡡⢌⠴⣢⢆⠶⣈⠧⠼⣀⣿⣿⣇⣼⡿⠿⠿⠟⠛⠛⠛⠛⠂⠀⢠⡿⣄⠳⣌⢧⣛⣮⢷⣻⡽⣯⣟⡷⣯⢟⡾⣵⣻⣞⡿⣶⣛⣶⣻⣗⣳⣏⠷⣉⠖⣡⠂⡀⢿⡀⢿⣲⡏⣻⠛⠙⣄⣤⣑⠢⣼⡟⢈⡑⡩⢦⠥⣼⠰⣎⠞⡶⣩⢎⡵⣩⠳⣏⡝⡳⢎⡽⢺⠽⣙⢦⣉⣎⣝⡱⣬⣤⢮
+⣼⡲⣵⡲⣝⢞⡳⣞⡵⣪⡑⣉⢓⡚⣖⠳⡒⣝⠊⠒⠁⢊⢤⡉⠢⠉⠐⠉⣿⡀⠀⠀⡀⠀⣀⣀⣀⣤⣤⣴⣾⢿⣳⣞⡿⣭⢿⣹⢮⡷⣏⣷⡻⣞⡽⣹⢯⡷⣏⡷⣯⣻⢷⣯⢷⣻⣞⡷⣯⡟⣬⢋⡆⢣⠄⡀⢣⣘⠁⢣⡸⠛⢋⠉⢠⡟⣴⡿⡁⠋⠑⠋⢊⠙⢒⢋⠖⣫⠖⣥⢫⣜⣱⣛⠶⣹⡹⣝⢺⣍⠻⣍⡳⣝⠾⣜⡻⣵⢯⣻
+⣶⡽⣶⣻⡝⣮⢟⡼⣳⢧⣛⡭⣏⡝⢮⡳⡝⣦⢫⡝⢭⢋⠖⣹⠒⠶⠲⠄⣼⣧⡀⠹⣿⣿⣿⡿⣿⣟⡿⣯⣟⣯⡷⣯⢿⡽⣯⣟⣯⢿⡽⣞⡿⣵⢫⣏⣷⣻⣽⣻⢷⣯⣟⣾⣻⢷⣯⣟⣷⡻⣕⡫⣜⡡⠒⡀⠀⠈⠃⢁⠠⡉⠠⣈⣼⠀⣿⡷⣰⢃⢦⣙⢮⣙⢮⢮⣙⢦⠻⣬⢳⢎⡧⣋⠟⡱⢛⡼⢓⢮⣛⠼⡹⣭⡹⣬⣙⣮⢏⡷
+⣧⣛⢶⣣⢟⡽⣞⡽⣣⢟⡼⣣⢟⡼⣳⢭⠳⣌⡳⣜⢧⣫⢞⡤⣩⠖⣥⢛⠤⢋⣿⡀⠹⣿⣿⣽⣷⣻⣽⡷⣯⣷⢿⣻⣯⢿⣽⡾⣯⡿⣽⣻⡿⣌⠳⣜⢾⣳⣯⣟⡿⣾⣽⣞⣯⣿⣳⡿⣾⡝⣧⢳⢬⠱⡁⠄⠠⢀⠀⡀⢆⠡⡔⣼⠃⣰⣟⡱⢣⢏⠶⣩⠖⣭⢚⢧⡛⣮⢳⣣⠟⣮⢳⣝⠾⣝⡯⣞⢯⠳⣭⢻⡵⣳⣝⣧⢟⣮⠿⣽
+⣿⣹⢮⣳⢏⣟⢾⣱⢟⣮⢳⡽⣺⡝⣧⢏⡷⣎⠷⣩⢎⡵⢊⠖⣁⠛⣌⡳⢎⠳⣌⢿⣄⠈⠿⣿⣿⣿⣷⣿⣿⣾⣟⡷⣯⢿⣳⣟⡷⣟⣯⢿⣿⠄⡛⠬⢻⣿⣷⡿⣽⣷⣻⢾⣻⡾⣽⣻⢷⡻⣜⠳⣎⠱⢡⠈⠀⠀⢀⠘⠌⢲⣼⠇⣴⡟⢎⡕⣫⢎⡳⢥⣛⠖⣯⢺⠵⣣⢟⡲⣏⢷⣋⡞⣽⣩⣛⣭⣛⣻⡙⣏⡳⣝⠾⣮⠿⣼⢻⡼
+⡷⣯⣻⡽⣾⣹⢾⣹⢞⡼⣣⡟⣵⡺⣵⢫⡞⣵⢫⡗⣫⠞⣭⢚⡥⣛⠶⡙⢮⡱⢪⡜⣽⡷⠀⣘⢻⣿⣿⣿⣿⣿⣿⣿⣯⣿⣳⣯⢿⡽⣯⣿⣿⡀⠀⠀⠃⠿⣿⡿⣽⡾⣟⣿⡷⣟⡿⣽⢯⡳⣍⠳⢌⡒⢠⠈⡄⢁⠆⡘⠲⣦⡤⣾⡟⣸⠣⡜⢦⢣⡝⢮⡜⣛⡖⣯⣹⢓⣮⢳⡝⣮⢳⡽⣲⢧⣛⡶⣝⢶⣫⣝⡳⣏⡷⣞⡷⣧⡿⣾
+⣿⣳⢯⣷⣻⣼⢻⡼⣫⢷⡻⣼⡳⣽⣚⡧⣟⡼⣣⢟⣥⣛⢦⢫⡜⣥⢻⡝⣦⡙⢧⣼⠏⢀⣼⣿⣷⠾⢿⣿⣿⣿⣿⣿⣿⣿⣿⣾⣿⢿⣿⣽⣿⣇⠀⠀⠀⠀⠹⣿⣯⢿⣽⣳⢿⣯⢿⡽⡾⡵⢎⡖⣣⢞⣣⣗⢰⡊⢵⡌⠄⣼⠳⣾⢣⣇⠻⣜⢧⡏⢾⣡⢟⣱⣛⠶⣭⢻⡜⣧⡻⣵⡻⣼⢳⣏⡷⣏⡿⣞⣳⣽⣻⡼⣏⡷⣯⢷⣻⢷
+⣷⢯⣟⣾⣳⣭⣟⣳⢯⣷⢻⣵⡻⢧⣻⠼⣧⢻⡵⣫⠶⣭⢎⡧⣛⢭⡳⣞⣥⢻⣟⠷⣠⣿⣿⣿⡇⣦⣄⣉⠹⠟⢿⣿⣿⣿⣿⣿⣾⣿⣿⣿⣽⣿⣷⣦⡀⠀⠀⠘⣿⣷⡺⣽⣻⢞⣯⡽⣳⣝⣣⣾⣱⢮⣶⣿⣷⣝⠮⣽⡆⢰⠀⢻⣞⢬⢻⡜⣧⣛⢧⢏⡾⣱⢏⡿⣜⢧⡻⡵⣏⡷⣽⢳⡟⣮⣟⣽⣳⢯⣷⣳⢯⡽⣯⣟⡽⣯⣟⡿
+⣿⣻⣞⣧⣟⡾⣞⡽⣯⣞⣟⣶⢻⣭⢗⣻⡼⣳⢏⡷⣛⡖⡯⢶⡹⣎⢷⡹⣜⣿⣿⠒⠻⢾⣿⡏⢿⣟⡱⢛⠿⣿⣦⣈⡙⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣤⣀⣼⣛⢿⣲⣽⣾⠶⠿⣟⣋⣙⣿⣟⣿⠿⣿⣿⣿⣿⡴⣻⡘⠀⣿⡏⡾⣡⡛⣶⡹⣎⢯⡞⣵⢫⡞⡽⣎⢷⡻⣼⢳⡽⣳⢯⢷⡞⣧⣟⠾⣧⣟⣯⣟⡷⣯⣟⡷⣯⢿
+⣟⣷⣻⢾⣭⢷⣯⣟⡷⣽⣞⡞⣟⣮⡻⣵⢫⣗⣻⢼⣣⢟⡽⣣⣟⡼⣣⢟⡼⣹⢷⣦⡀⠨⠿⠀⢸⣿⡌⣏⠶⣢⠬⢍⠿⡶⣾⣧⣬⣭⣟⠛⢛⣛⡻⠿⠿⠿⠿⠿⣿⣛⡛⢻⣥⣬⣿⡷⢟⣩⠛⣱⡟⢻⣦⡉⢿⣿⢿⣷⡙⣿⢠⣿⡿⣱⢣⡝⣶⡹⣎⢷⡹⢮⡗⣯⢗⡯⣏⡷⣏⣯⢷⣏⡿⡾⣽⣳⣞⣿⣳⣻⢮⡿⣽⣳⢯⡿⣽⣻
+⣿⢾⣽⣻⣞⡿⣾⡽⣞⣷⣫⢿⡽⢶⣻⣵⡻⣎⣟⢮⡷⣫⣞⠷⣎⡷⣛⢮⣳⡹⢶⡻⣷⣦⣄⣄⣼⡷⡸⡜⣶⢡⡓⣎⢲⡱⢬⡰⠞⣜⡹⠛⣏⢹⠛⠶⠶⠶⠶⠶⠾⡟⢟⡻⢋⡵⢢⢣⢆⡘⣶⣫⢜⡣⢞⣿⣌⢻⣿⣽⣷⠏⢸⣿⡱⣏⡳⣝⠶⣝⢮⡳⣏⢿⡼⣫⢾⣝⣳⡽⣫⣞⣯⢾⣽⣛⣷⣛⡾⣧⣟⡷⣯⣟⣷⣻⢯⣟⣯⢿
+⣿⣻⣞⡷⣯⣟⣷⣻⡽⣾⡽⣯⣟⣯⢷⣭⣟⣭⡟⣮⢗⣳⡯⣟⡽⣺⡭⢷⣣⢟⣣⢗⡳⢮⡝⡯⣝⡲⢧⡝⣎⢧⡝⣬⢣⡝⢶⡻⢼⣦⢹⡱⣌⠶⣩⢋⡭⣓⡼⡑⣦⣼⠢⢥⡓⢬⢓⡬⢦⡙⣟⣳⣭⡙⢧⡚⣿⣷⠟⣿⣏⠀⢸⡟⡶⣭⣝⢮⣛⠾⣭⣳⢯⣳⢏⡷⢯⣞⣧⡟⣷⡽⣺⢯⡾⣽⢾⡽⣽⢾⣹⢯⣷⣻⢾⣻⣯⣟⡾⣿
+⣿⣳⣯⣟⡷⣿⢾⣿⣿⣷⣿⣷⣿⣾⣿⡶⣿⣿⡿⣝⣞⡳⣿⣼⢳⢯⣽⢳⣏⡾⣱⠯⣝⠾⡜⡵⣎⠵⣓⡞⡭⣖⡹⢆⣳⠺⣽⣿⣷⡸⢧⡳⣌⠳⣥⢋⠶⡱⢾⣿⣷⠤⡳⢦⡙⡆⢯⡒⢧⣿⣿⣷⡤⣟⠼⣙⣬⢟⣷⡄⠙⢳⣾⣟⣳⢳⡜⣧⡻⣏⣷⡹⣾⢭⡿⣹⣟⡾⣼⣻⣵⣻⡽⣯⢿⡽⣯⢿⡽⣯⣟⣯⣷⡿⣿⣿⣾⣽⣻⣽
+⣿⣳⣟⣾⣻⣟⣿⣿⣿⣿⣻⣟⡿⣻⣻⡽⣿⣿⣟⣼⣳⣿⣽⣯⣯⡷⣞⣯⣞⣿⣵⣻⣜⣿⣜⣳⡝⣾⣭⣳⣱⣮⣕⣫⢖⡹⣛⣯⣝⣯⣽⣗⣎⣳⣌⣟⡜⣣⢿⣿⣿⢪⠵⣎⠵⣹⢶⣹⢻⣿⣿⣿⣷⣩⢟⡱⣼⣾⣯⣿⣶⣾⣿⣿⣯⣷⣫⣷⡝⣷⣎⣿⣽⠾⣽⡳⣿⣿⣱⢷⣿⣳⣿⣽⣯⣿⣝⣯⣟⡷⣯⣟⣷⣿⣿⣿⣷⣻⣽⣻
+⣿⣳⣯⡷⣿⣽⣾⣿⣿⣷⣻⣾⣽⣷⢯⡷⣿⣿⣟⣷⣿⣿⣿⣿⣿⣿⣷⣞⣾⣿⣿⣿⡿⣿⣿⣾⣵⣻⣿⣿⡿⠿⣿⣿⣮⢳⣿⣿⣗⢾⣿⣿⣿⠿⣿⣿⣿⣆⠿⣿⢧⣋⠾⣜⡣⣭⡟⣴⣿⣿⡭⢿⣿⣧⣛⢶⣻⣿⣿⣿⡿⣿⣿⣿⣿⢿⣿⣿⣿⣾⣹⣿⣿⣟⣳⢻⣿⣿⣯⢿⣿⣿⣿⣿⣿⣿⣿⣞⣳⣿⣿⣿⣿⣿⣿⣿⣿⡽⣷⣿
+
+""",0.001)
         alive = battle(FiskMänniska, playerclass, alive)
         if alive == False:
-            return playerclass.alive
+            return alive
     
     input("Tryck enter för att fortsätta -> ")
     os.system('cls' if os.name == 'nt' else 'clear')
-    slowtype("Du går vidare fast du är trött", 0.05)
-    slowtype("Långsamt börjar grottan bli torrare", 0.05)
+    slowtype("Du går vidare även fast du är trött", 0.05)
+    slowtype("Grottan börjar bli torrare och torrare", 0.05)
     slowtype("Efter en stund märker du att marken blir mjukare, nästan som sand", 0.05)
     slowtype("Det luktar fuktigt och mögel, luften känns tung", 0.05)
     slowtype("Du hör ett svagt ljud av något som rör sig under sanden", 0.05)
@@ -939,7 +978,7 @@ def grottvägen(alive):
         slowtype("Du drar fram ditt vapen och förbereder dig för strid!", 0.05)
         alive = battle(sandworm, playerclass, alive)
         if alive == False:
-            return playerclass.alive
+            return alive
         slowtype("Efter striden andas du ut och fortsätter vidare", 0.05)
     else:
         slowtype("Du väljer att inte störa det mystiska ljudet och fortsätter framåt", 0.05)
@@ -956,7 +995,8 @@ def grottvägen(alive):
     slowtype("En gigantisk, glittrande drake sover bland högar av guld och skatter", 0.05)
 
     choice2 = input(
-        "Vill du, 1 smyga förbi draken eller 2 försöka ta lite skatt? ")
+        """Vill du, 1. smyga förbi draken eller 2. försöka ta lite skatt
+        ->""")
 
     if choice2 == "1":
         slowtype("Du håller andan och smyger längs väggarna", 0.05)
@@ -966,29 +1006,27 @@ def grottvägen(alive):
     else:
         slowtype("Du tar ett steg mot skatten", 0.05)
         slowtype("Draken öppnar ett öga och låter ett öronbedövande vrål", 0.05)
-        time.sleep(2)
+        slowtype("Det ser ut som att den kallar på hjälp",0.05)
+        slowtype("Ett monster kommer plötsligt bakifrån dig och försöker göra en överaskningsattack.",0.05)
+        slowtype("Men du är för snabb.")
+        time.sleep(1)
         # Kalla draken som monster
         monsterval = monsterpullar()
         alive = battle(monsterval, playerclass, alive)
         if alive == False:          # Alive ändras i battle func
-            return playerclass.alive
-        slowtype("Efter en hård strid lämnar du salen med en bit av skatten", 0.05)
-    time.sleep(1)
+            return alive
+    slowtype("Efter en hård strid lämnar du salen med en bit av skatten", 0.05)
     slowtype("När du går vidare från salen blir grottan smalare och luften varmare", 0.05)
-    time.sleep(2)
     slowtype("Du börjar se ljus som sipprar in från små sprickor ovanför", 0.05)
-    time.sleep(2)
     slowtype("Det känns som att du närmar dig grottans slut", 0.05)
-    time.sleep(2)
     slowtype("Men plötsligt hör du ett eko av fotsteg bakom dig", 0.05)
-    choice3 = input(slowtype(
-        "Vill du, 1 vända dig om eller 2 fortsätta framåt snabbt? ", 0.05))
+    choice3 = input(slowtype("Vill du, 1. vända dig om eller 2. fortsätta framåt snabbt? ", 0.05))
     if choice3 == "1":
-        slowtype("Du vänder dig om och ser en grupp skuggfigurer", 0.05)
+        slowtype("Du vänder dig om och ser en skuggfigur", 0.05)
         time.sleep(2)
         slowtype("De verkar inte se dig än, kanske kan du smyga undan?", 0.05)
         stealth_choice = input(slowtype(
-            "Vill du, 1 smyga undan eller 2 konfrontera dem? ", 0.05))
+            "Vill du, 1. smyga undan eller 2. konfrontera dem? ", 0.05))
         if stealth_choice == "1":
             slowtype("Du kryper längs väggarna och lyckas ta dig förbi utan problem", 0.05)
         else:
@@ -996,7 +1034,7 @@ def grottvägen(alive):
             # Slåss mot mystical men
             alive = battle(Skuggriddare, playerclass, alive)
             if alive == False:          # Alive ändras i battle func
-                return playerclass.alive
+                return alive
     else:
         slowtype("Du rusar framåt och ignorerar fotstegen bakom dig", 0.05)
         time.sleep(2)
@@ -1010,20 +1048,22 @@ def grottvägen(alive):
     slowtype("Grattis, du överlevde Grottvägen! Som belöning får du 50 guld och exp.", 0.05)
     playerclass.amoney(50)
     playerclass.add_exp(50)
-    
+    input("Tryck enter för att avslutan Grottvägen ->")
+    os.system('cls' if os.name == 'nt' else 'clear')
     playerclass.grott = True
-    return alive #Funkar inte, bara kraschar
+    return alive 
 
 
 
 def skogsvägen(alive):
     slowtype("Efter ett tag kommer du fram till en mörk skog.", 0.05)
     time.sleep(1)
-    slowtype("Du kliver in i den mörka skogen. Ljuset bakom dig försvinner nästan direkt när träden sluter sig över dig. Luften blir kylig och stilla. Något prasslar mellan stammarna, men du kan inte se vad. Skuggorna rör sig, och en obehaglig känsla kryper längs ryggen.", 0.05)
+    slowtype("""Du kliver in i den mörka skogen. Ljuset bakom dig försvinner nästan direkt när träden sluter sig över dig. 
+Luften blir kylig och stilla. Något prasslar mellan stammarna, men du kan inte se vad. Skuggorna rör sig, och en obehaglig känsla kryper längs ryggen.""", 0.05)
     time.sleep(4)
     if vägdecision() == 1:
         slowtype("Du fegar ut och bestämmer dig för att vandra hem.", 0.05)
-        return 
+        return alive
     else:
         slowtype("Du går djupare in i skogen.", 0.05)
         time.sleep(2)
@@ -1031,7 +1071,7 @@ def skogsvägen(alive):
         monsterval = monsterpullar()
         alive = battle(monsterval, playerclass, alive)
         if alive == False: 
-            return playerclass.alive         # Alive ändras i battle funktionen
+            return alive         # Alive ändras i battle funktionen
     input("Tryck enter för att fortsätta -> ")
     os.system('cls' if os.name == 'nt' else 'clear')
     
@@ -1057,17 +1097,19 @@ def skogsvägen(alive):
         time.sleep(2)
         slowtype("DU DOG",0.07)
         alive == False          # Alive ändras i battle func
-        return playerclass.alive
+        return alive
     else:
         slowtype("Du svarade inte korrekt och hinner därför inte reagera på det fallande trädet.", 0.05)
         time.sleep(2)
         slowtype("DU DOG",0.07)
         alive == False       # Alive ändras i battle func
-        return playerclass.alive
-    
-    input("Tryck enter för att fortsätta -> ")
-    os.system('cls' if os.name == 'nt' else 'clear')
-    slowtype("Efter katastrofen så fortsätter du djupare in i den mörka skogen medans du vandrar mellan de höga vajande träden, tills du känner att någonting inte riktigt stämmer.",0.05)
+        return alive
+
+    slowtype("Efter dramat blir du ståendes helt chockad.",0.07)
+    if vägdecision() ==1:
+        slowtype("Du kan inte hantera chocken och bestämmer dig för att vända tillbaks.", 0.05)
+        return alive
+    slowtype("Efteråt fortsätter du djupare in i den mörka skogen medans du vandrar mellan de höga vajande träden, tills du känner att någonting inte riktigt stämmer.",0.05)
     slowtype("Två röda ögon ses blinka mellan träden, och de verkar spana in just dig.",0.05)
     slowtype("På mindre än en sekund springer monstret och hoppar på dig!",0.05)
     time.sleep(2)
@@ -1076,13 +1118,12 @@ def skogsvägen(alive):
     monsterval = monsterpullar()
     alive = battle(monsterval, playerclass, alive) #Denna battle funkar inte!!!
     if alive == False:        # Alive ändras i battle func
-        return playerclass.alive
+        return alive
     
     slowtype("Efter ännu en till attack så känner du dig utmattad och fortsätter vandra med hopp om att du snart kommer ut ur denna läskiga skog.",0.05)
     slowtype("Efter ett långt äventyr så ser du ett glimmer från skogens kant och bestämmer dig för att gå dens håll.",0.05)
     slowtype("När du närmrar dig så inser du att det är en liten stuga.",0.05)
 
-    
     while True:
         Stuga_val = int(input("""           Vill du:
             1. Inspektera stugan       2. Strunta i stugan och fortsätta vandra
@@ -1092,15 +1133,15 @@ def skogsvägen(alive):
             if Stuga_val == 1:
                 slowtype("Du bestämmer dig för att ta en liten titt runt stugan.",0.05)
                 slowtype("Du går fram till den lilla stugan och kollar in genom fönstret.",0.05)
-                slowtype("Stugans insida är i fint skick, nästan som att någon bodde här ute i skogen.", 0.05)
+                slowtype("Stugans insida är i fint skick, nästan som att någon bor här ute i skogen.", 0.05)
                 slowtype("Helt plötsligt hörs ett prassel bakom dig.",0.05)
                 input("Tryck enter för att fortsätta ->")
                 os.system('cls' if os.name == 'nt' else 'clear')
                 slowtype("Du vänder dig hastigt om och framför dig står en kort gammal dam som kollar på dig med nyfikna ögon.",0.05)
                 slowtype("Men hallå där, Vad heter du? Frågar damen.", 0.05)
-                slowtype(f"H-hej, mitt namn är {playername}. Säger du osäkert tillbaks.",0.05)
+                slowtype(f"H-hej, mitt namn är {playerclass.pname}, säger du osäkert tillbaka.",0.05)
                 slowtype("Mitt namn är Greta, trevligt att träffas",0.07)
-                slowtype(f"Men {playername}, vad gör en ung äventyrare som dig här ute i denna farliga skog? Undrar Greta.",0.05)   
+                slowtype(f"Men {playerclass.pname}, vad gör en ung äventyrare som dig här ute i denna farliga skog? Undrar Greta.",0.05)   
                 damfråga = int(input("""                           Vad svarar du?
     1. Skulle kunna fråga detsamma.      2. Inget för dig att veta! 
     -> """))
@@ -1129,15 +1170,15 @@ def skogsvägen(alive):
                             time.sleep(1)
                             
                             damfråga3 = int(input("""                   Vad gör du?
-            1. Du tar villigt emot maten        2. Du avstår
-            -> """))
+    1. Du tar villigt emot maten        2. Du avstår
+    -> """))
                             if damfråga3 ==1:
                                 slowtype("Gärna! Säger du och tar emot en varm skål av grytan.",0.05)
                                 slowtype("Vad är det för gryta? Frågar du.",0.05)
                                 slowtype("Det är bara ett simpelt recept på en kaningryta jag brukade äta när jag var liten. Svarade Greta.",0.05)
                                 slowtype("Du villigt tar ett stort slurp ur grytan.",0.05)
                                 slowtype("WOW! Nästan skriker du ut.",0.05)
-                                slowtype(f"Vad är det {playername}? Undrar Greta.",0.05)
+                                slowtype(f"Vad är det {playerclass.pname}? Undrar Greta.",0.05)
                                 slowtype("Detta är den bästa grytan jag någonsin ätit i hela mitt liv! Säger du till Greta.",0.05)
                                 slowtype("Jag känner mig typ starkare!!! Skriker du glatt.",0.05)
                                 slowtype("Men vad roligt att du gil... försöker Greta säga då hon blev avbruten av ett högt vrål.",0.05)
@@ -1153,7 +1194,6 @@ def skogsvägen(alive):
                                 slowtype("Jag tycker att du borde ta den om det kan hjälpa dig på något sätt.",0.05)
                                 input("Tryck enter för att fortsätta ->")
                                 os.system('cls' if os.name == 'nt' else 'clear')
-                                slowtype("Du tar villigt emot drycken.",0.05)
                                 playerclass.add_item(Item_list1[3])
                                 slowtype("Tack. Säger du.",0.05)
                                 slowtype("Detta kan vara väldigt hjälpsamt.",0.05)
@@ -1189,6 +1229,10 @@ def skogsvägen(alive):
         except ValueError:
             slowtype("Du gav inget ett giltigt svar, svara om.", 0.05)
     
+    time.sleep(1)
+    if vägdecision() ==1:
+        slowtype("Du bestämmer dig för att vända tillbaks.", 0.05)
+        return alive
     slowtype("Efter ännu ett tag av vandrande känner du att vinden blir starkare och starkare och framför dig ses en öppning mellan träden.",0.05)
     slowtype("När du nästan kommit ut ur skogen känner du någonting ta tag om din arm och du blir snabbt kastad tillbaks in i skogen.",0.07)
     slowtype("Du reser dig hastigt och ser en stor figur mellan träden.",0.07)
@@ -1197,7 +1241,7 @@ def skogsvägen(alive):
     slowtype(f"Du ser monstret Skogens Väktare", 0.1)
     alive = battle(SkogensVäktare, playerclass,alive)
     if alive == False:
-        return playerclass.alive
+        return alive
     input("Tryck enter för att fortsätta ->")
     os.system('cls' if os.name == 'nt' else 'clear')
     slowtype("Efter den oförväntade träffen med det mytiska monstret Skogsväktaren så kan du ta en stund koppla av.",0.07)
@@ -1205,8 +1249,12 @@ def skogsvägen(alive):
     slowtype("Grattis, du överlevde Skogsvägen! Som belöning får du 50 guld och exp.",0.07)
     playerclass.amoney(50)
     playerclass.add_exp(50)
+    input("Tryck enter för att avsluta Skogsvägen ->")
+    os.system('cls' if os.name == 'nt' else 'clear')
     playerclass.skog = True
     return alive
+
+
 
 def abanondedcity(alive):
     slowtype("Efter ett tag kommer du fram till vad du tror är en helt vanlig stad.", 0.05)
@@ -1217,16 +1265,17 @@ def abanondedcity(alive):
     os.system('cls' if os.name == 'nt' else 'clear')
     slowtype("När du funderar på vart du ska ta vägen så märker du en hög skyskrapa som bara kallar ditt namn. Du bestämmer dig naturligtvis för att gå dit.", 0.05)
     slowtype("Du tar dig genom de övergivna gatorna och efter en lång vandring så kommer du äntligen fram till den otroligt höga byggnaden.", 0.05)
-    slowtype("Du går in genom porten på den föredetta lyxiga byggnaden och kollar runt i den förvånadsfulla fräsha entrén.", 0.05)
+    slowtype("Du går in genom porten på vad som en gång var en lyxig byggnaden.", 0.05)
+    slowtype("Entrén kan fortfarnde betraktas som fräsch om man bortser från allt damm", 0.05)
     slowtype("Allt verkar alldels för avkopplande tills...", 0.05)
 
     monsterval = monsterpullar()
     alive = battle(monsterval, playerclass, alive)
     if alive == False:        # Alive ändras i battle func
-        playerclass.alive 
+        return alive 
     if vägdecision() ==1:
         slowtype("Du bestämmer dig för att vända tillbaks.", 0.05)
-        return
+        return alive
     slowtype("Efter fighten så fortsätter du att gå runt i skyskrapan tills du hittar ett par trappor.", 0.05)
     time.sleep(1)
     while True:
@@ -1245,19 +1294,20 @@ def abanondedcity(alive):
                 slowtype("Du plockar upp mynten och går din väg.", 0.05)
                 playerclass.amoney(40)
                 break
-                        
+            
             elif trapporupellerner == 2:
                 time.sleep(1)
                 slowtype("Du bestämde dig för att gå ner för trapporna.", 0.05)
                 slowtype("Det verkar som att du gått in på föredetta garagevåningen.", 0.05)
-                slowtype("Det finns lyxiga bilar på din vänster och höger men den som faktiskt väcker ditt intresse är en gammal mint condition Volkswagen Golf.", 0.05)
+                slowtype("Det finns lyxiga bilar på din vänstra och högea sida, men det som faktiskt väcker ditt intresse är en retro mint condition Volkswagen Golf.", 0.05)
                 slowtype("Du går fram till den vackra bilen och bestämmer dig för att se om den fungerar så du bryter dig in via fönsterrutan.", 0.05)
-                slowtype("Solklart glömmer du ju bort att det behövs nycklar så du går ut ur bilen i misstro fast någonting glimmade till i baksätet och bestämmer dig för att tar ännu en tit in i bilen.", 0.05)
+                slowtype("Solklart glömmer du ju bort att det behövs nycklar, så du behöver går ut ur bilen i misstro.", 0.05)
+                slowtype("ågonting glimmade till i baksätet och bestämmer dig för att tar ännu en tit in i bilen.", 0.05)
                 slowtype("Det visade sig vara ett golfsett.", 0.05)
                 while True:
                     time.sleep(2)
                     Tauppbackseatweapon = int(input(f"""Vill du plocka upp en golfklubba och byta ut den mot ditt nuvarande vapnet {playerclass.weapon.name}?
-                    1. Ja     2. Nej
+                    1. Ta upp den     2. Ta inte upp den
                     -> """))
                     try:
                         if Tauppbackseatweapon == 1:
@@ -1280,7 +1330,10 @@ def abanondedcity(alive):
                 slowtype("Du gav inte ett giltigt svar, svara om.", 0.05)
         except ValueError:
             slowtype("Du gav inte ett giltigt svar, svara om.", 0.05)
-    time.sleep(2)
+    time.sleep(1)
+    if vägdecision() ==1:
+        slowtype("Du bestämmer dig för att vända tillbaks.", 0.05)
+        return alive
     slowtype("Efter ett långt äventyr så blev du klar med att undersöka skyskrapan och du kan äntligen fortsätta din väg.", 0.05)
     input("Tryck enter för att fortsätta ->")
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -1289,8 +1342,8 @@ def abanondedcity(alive):
     slowtype("Men plötsligt så hörs ett skräckinjagande vrål mitt i det lugna.", 0.05)
     while True:
         museumfortsättaellerundersöka = int(input("""Vill du undersöka vrålet eller vill du fortsätta ut ur staden?
-        1. Undersöka     2. Fortsätta
-                -> """))
+        1. Undersöka     2. Fortsätta(Kommer med konsekvenser)
+        -> """))
         try:
             if museumfortsättaellerundersöka == 1:
                 os.system('cls' if os.name == 'nt' else 'clear')
@@ -1301,7 +1354,7 @@ def abanondedcity(alive):
                 time.sleep(1)
                 if vägdecision() ==1:
                     slowtype("Du bestämmer dig för att vända tillbaks.", 0.05)
-                    return
+                    return alive
                 time.sleep(0.5)
                 slowtype("Vrålet har ännu än inte slutat och du bestämmer dig för att gå in och äntligen få reda på vad som skapar oljudet.", 0.05)
                 slowtype("Du öppnar lätt dörren och tar en liten titt in i museets entré.", 0.05)
@@ -1310,22 +1363,29 @@ def abanondedcity(alive):
                 input("Tryck enter för att fortsätta ->")
                 os.system('cls' if os.name == 'nt' else 'clear')
                 slowtype("Efter lite inspektion visar det sig att museumet verkar vara ett gammalt naturhistorisk museum med massor med utrotade varelser, så som dinosaurier.", 0.05)
-                slowtype("Du går runt och kollar på alla uppvisade dinosaurieskelett en efter en, men plötsligt så märker du att någonting inte riktigt stämmer.", 0.05)
-                slowtype("En av uppvisningsplattformarna är tomma.",0.05)
-                slowtype("Medans då står och klurar på varför en av uppvisningsplattform är tomm så känner du ett kyligt andetag gå nerför din nacke.",0.05)
-                slowtype("Med hjälp av dina snabba reflexer så hoppar du precis undan en dödlig attack som slår i golvet med ett högt klang.", 0.05)
+                slowtype("Du går runt och kollar på alla uppvisade dinosaurieskelett en efter en.", 0.05)
+                slowtype("Ett av skelleten saknas dock.",0.05)
+                slowtype("Medans då står och klurar på varför en av skeletten saknas så känner du ett kyligt andetag gå nerför din nacke.",0.05)
+                slowtype("Med hjälp av dina snabba reflexer så hoppar du precis undan en dödlig attack som slår i golvet med ett högt pang.", 0.05)
                 slowtype(f"Du ser monstret Skelett Raptor", 0.1)
                 alive = battle(SkelettRaptor, playerclass, alive) #its funkin
                 if alive == False:
-                    return playerclass.alive
+                    return alive
                 os.system('cls' if os.name == 'nt' else 'clear')
                 slowtype("Efter den farliga fighten mot Skelett Raptorn bestämmer du dig för att äntligen lämna denna övergivna stad och museum bakom dig och fortsätta med ditt huvudäventyr.",0.05)
                 slowtype("Efter ännu en lång tur kommer du till slut fram till där du lämnade för att undersöka vrålet, fast nu är det tyst och fridfullt.",0.05)
+                slowtype("Efter denna otroligt långa och spännande turen genom staden så kan du äntligen fortsätta frammåt och besegra alla som kommer i din väg.",0.05)
+                slowtype("Grattis, du överlevde Stadsvägen! Som belöning får du 50 guld och exp.", 0.05)
+                playerclass.amoney(50)
+                playerclass.add_exp(50)
+                playerclass.city = True
                 break
+            
             elif museumfortsättaellerundersöka ==2:
                 os.system('cls' if os.name == 'nt' else 'clear')
                 time.sleep(1)
                 slowtype("Du bestämmer dig för att strunta i vrålet och fortsätter istället åt samma håll som du först tänkte gå.",0.05)
+                slowtype("Du har upptäckt, men än finns det mer att lära i staden.", 0.07)
                 break
             else:
                 slowtype("Du gav inte ett giltigt svar, svara om.", 0.05)
@@ -1333,11 +1393,9 @@ def abanondedcity(alive):
             slowtype("Du gav inte ett giltigt svar, svara om.", 0.05)
     
     slowtype("Efter denna otroligt långa och spännande turen genom staden så kan du äntligen fortsätta frammåt och besegra alla som kommer i din väg.",0.05)
-    slowtype("Grattis, du överlevde Stadsvägen! Som belöning får du 50 guld och exp.", 0.05)
-    playerclass.amoney(50)
-    playerclass.add_exp(50)
-    playerclass.city = True
-    return alive # det krachar bara
+    input("Tryck enter för att avsluta Stadsvägen ->")
+    os.system('cls' if os.name == 'nt' else 'clear')
+    return alive 
 
 def biblloktekt():
     while True:
@@ -1458,6 +1516,15 @@ Nu ekar tystnaden mellan ruinerna, och platsen bär på historiens mysterier och
                                 time.sleep(0.5)
                                 slowtype("Even the devil had stoped counting the lost souls", 0.1)
                                 time.sleep(0.5)
+                                slowtype("He is talking very slowly, you think for yourself",0.05)
+                                biblo = input("Du you want to leave the libray or continou listeing to the old man,   Leave or Stay",0.05)
+                                biblo = biblo.upper()
+                                if biblo == "LEAVE":
+                                    playerclass.hybris = True
+                                    slowtype("The old man watches you as you suddenly leave him alone in the libray",0.05)
+                                    input("->")
+                                    return
+                                time.sleep(0.5)
                                 slowtype("After all my experinces abroad i returned home with fainted heart", 0.15)
                                 time.sleep(0.5)
                                 slowtype("I settled down and became the old man you see before you", 0.1)
@@ -1485,9 +1552,7 @@ Nu ekar tystnaden mellan ruinerna, och platsen bär på historiens mysterier och
     return playerclass.hybris       #Skickar tillbaka om playern har hybris eller inte
 
 #Om du vill prova något lägg till det här!!!
-
-
-
+playerclass.add_exp(40)
 def main(alive):
     while alive == True:
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -1496,9 +1561,9 @@ def main(alive):
                     Välkommen till Sweelept
         1. Äventyr       2. Marknaden       3. Bibloteket
     
-                4. Inventory     5. Casino
-            
-                        6. Save game  
+                4. Inventory     5. Casino       Dmg:{playerclass.str}
+                                                 HP:{playerclass.hp}
+                        6. Save game             Lvl:{playerclass.lvl}
             """, 0.01)
         Platsval = input("Vad vill du välja? ")
         if Platsval == "1":
@@ -1510,15 +1575,19 @@ def main(alive):
             if plats == "ja":
                 continue      # Slutar while loopen
             elif plats == 1:
-                alive = grottvägen(alive)
+                playerclass.alive = grottvägen(alive)
+                
             elif plats == 2:
-                alive =skogsvägen(alive)
+                playerclass.alive = skogsvägen(alive)
+                
             elif plats == 3:
-                alive = abanondedcity(alive)
+                playerclass.alive = abanondedcity(alive)
+                
             else:
                  slowtype("error i main", 0.05)
-            if alive == False:
+            if playerclass.alive == False:
                 slowtype("DU DOG", 0.2)
+                return
 
         elif Platsval == "2":
             os.system('cls' if os.name == 'nt' else 'clear')
@@ -1542,6 +1611,7 @@ def main(alive):
                     slowtype("Vad vill du ha använda för item? Koperia namnet från item listan",0.05)
                     cons = input()
                     playerclass.use_item(cons)
+                    input("->")
                     continue
             elif invval == "NEJ":
                 continue
@@ -1559,5 +1629,74 @@ def main(alive):
         else:
             pass
 
+slowtype("""
+⠿⡼⢳⢯⡿⣽⣛⣎⣳⣭⣞⣶⣳⣤⢦⣴⣿⣏            ⢴⣶⡄⠀⠰⣶⣦⠀⠀⠀⠀⠉⠠⠀⠈⠤⣴⣶⣶⣶⣶⣶⣶⣶⣶⣶⣄⠀⠀⣤⣶⠊⠁⠀⠀⠀⢀⠀⠀⠀⣉⠈⠉⠉⠁⠀⠈⠁⠀⠈⢻⣌⠇⣛⠧⣹⠳⠄⢛⡈⠁⡀⠄⡙⠛⡶⢭⠶⣀⣋⢀⡁⡁⠼⠧⣘⣳⠽⣛⢯⡙⣭⠻⡕⠚⠛⠻⠯⢟⣹⣎⢯⠛
+⣑⣬⣣⢎⡴⣥⠭⡌⢥⡹⡜⡜⠣⠎⠇⣿⣿⡟⠋⡁⠓⠈⡁⠠⠈⠀⠀⠛⠃⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⣽⣿⡟⠻⣏⣩⠿⠛⠛⠋⠋⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⢀⡠⠤⠋⠋⠓⠒⠛⠓⠀⠰⠤⠄⠀⠈⠛⠋⠛⠚⠳⢤⡬⣝⠃⠛⠃⠬⠷⠼⢳⣏⠿⣭⠾⣵⢫⠖⡾⢥⣤⡑⣌⠢⣉⠄⡁⠤⠬⡔⠂⠒⠉⠓⠬⡷⢶
+⣭⣡⠉⠍⠙⠈⠒⠈⠂⠁⠉⠈⠄⢀⠀⣿⣿⡇⠀⢀⠀⠁⡀⠐⠀⠄⠂⣥⣤⡄⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠰⢿⣿⡇⠀⠈⠁⠀⠀⠀⠀⢀⣠⠞⢻⣿⠀⣀⣤⠴⠒⣩⣥⣤⣤⣄⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣶⣶⡀⠀⠀⠀⠀⣶⣤⢀⣠⣤⣦⣤⣀⠀⠈⠉⠀⠃⣨⣤⣬⣤⣿⣷⣏⡘⠳⠘⠮⠱⣎⠴⣲⡙⡞⢲⠫⠜⣀⠃
+⢂⣡⡈⢀⠂⠁⡀⠂⠁⠈⡀⠁⠀⠂⠀⣿⣿⣏⡐⠢⠌⡐⠐⠈⠀⠄⠀⣼⣿⡇⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⣹⣿⣇⣤⣀⣀⣀⣀⣀⣀⣈⠀⠀⣾⣿⠁⠁⠀⣴⣿⡿⠛⠋⠛⢿⣿⣦⠀⠀⠀⣿⣿⣿⠿⠛⠛⠻⣿⣷⣄⠈⠁⢿⣿⣿⠿⠛⠛⠿⣿⣿⡅⠉⠁⣶⣿⡿⡟⠛⠛⠿⣿⣿⡄⠀⡀⢁⢂⠒⠤⡉⡝⠲⣎⠷⢲⠞
+⠀⠀⠈⠑⠲⠖⣶⣡⣊⣄⣠⠘⣬⢋⠇⣿⣿⡧⠈⠄⢀⠠⠀⠀⠄⠀⡀⣻⣿⡀⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡿⠿⠿⠿⠿⠿⠿⠏⠀⠀⠀⢿⣿⠀⠀⣼⣿⡟⠀⠀⠀⠀⠀⢹⣿⣇⠀⠀⣿⣿⠁⠀⠀⠀⠀⢹⣿⡇⠀⠀⣿⣿⠃⠀⠄⠠⠀⢹⣿⣷⠀⢀⠛⠋⠁⠀⠁⣀⣠⣿⣿⡏⠑⠁⢂⠠⠈⠔⠒⠈⠁⡀⠠⠁⠈
+⢤⠬⡴⢦⡕⣚⢤⡡⢥⡌⣄⡙⢢⠉⠂⣿⣿⡇⠀⠈⠀⠀⠀⠀⢀⠀⠀⣿⣿⡆⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⣿⣿⡄⠀⠀⠀⠀⠀⢰⣿⣿⠀⠀⣿⣿⠀⠀⠠⠀⠀⢘⣿⣿⠀⠀⣿⣿⠀⠀⢀⠐⠀⢸⣿⣿⠀⠀⣴⣾⣿⣿⡿⠿⠟⣿⣿⡇⠀⠌⢀⠀⠢⠤⠦⠱⠘⠴⢁⢆⣁
+⣽⢾⡵⢮⠼⡍⢶⡱⢦⡹⢬⡍⣄⠠⠄⣿⣿⣇⣀⠂⠁⡀⠁⠠⠀⠈⠀⣻⣿⡁⠀⢀⣿⣿⠀⠀⠐⠀⠀⠂⠀⠀⠈⣽⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⠀⠀⠹⣿⣧⠀⠀⠀⠀⠀⣸⣿⡏⠀⠀⣿⣿⡄⠀⠐⠀⠀⣼⣿⡇⠀⠐⣿⣿⣆⠀⢀⠀⠀⣸⣿⡟⠀⢺⣿⣿⠉⡒⢀⡠⣀⣿⣿⡇⠉⡀⠆⠲⠐⢂⠐⠂⠒⠤⠤⡜⠚
+⣭⣥⣚⠴⡒⠒⠦⡐⠀⠉⠀⠈⠀⠉⠁⣿⣿⣿⣾⣿⣿⣿⣿⣷⣶⡁⠀⣿⣿⡇⠀⠸⣿⣿⠂⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⡄⠀⠀⠙⢿⣷⣶⣤⣴⣾⡿⠟⠀⠀⠀⣿⣿⣿⣦⣤⣴⣾⡿⠛⠀⠈⠀⣿⣿⣿⣷⣶⣶⣿⣿⠟⠀⠠⠹⣿⣿⣷⣽⣭⣿⣿⣿⣿⣿⠛⠐⢆⢦⡱⢦⠲⣌⣖⠲⠶⢤⣉
+⠷⡞⢶⣣⠴⢇⣖⣠⣉⣍⣉⣁⣉⠂⠉⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠁⡀⠛⠋⠉⠠⠜⠛⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠛⠓⠀⠀⡄⠀⠀⠀⠀⢀⠴⢃⣄⡀⢥⣀⣀⣀⠀⠈⠛⠙⠛⠉⠠⠀⠀⠀⢠⣿⣿⠀⠉⠛⠋⠉⠀⠀⠀⠀⠸⣿⣿⡆⠙⠛⠛⢉⠀⠠⠈⢀⠀⡀⠙⠛⠛⠛⠛⣡⠜⣛⠛⢤⢂⣈⣀⣉⢆⡶⡰⠎⠻⣹⢧⠻
+⣤⣄⡠⢈⠙⠌⡘⠠⣉⠀⠤⠤⡤⢋⠙⠉⡐⢂⠠⣀⢂⣁⡐⠠⠀⢀⠀⠀⡀⠀⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠄⠀⠀⠀⠀⠀⢀⡴⡋⠂⠉⠠⠄⠀⠀⠒⠒⠒⠈⠓⢳⡄⠙⠂⠀⠀⣿⣿⠀⠀⠠⠄⠀⢀⠤⠖⣒⠒⣿⣿⠆⡤⠀⠂⢀⠂⠔⡑⢂⠒⣀⠂⠆⠓⡤⢛⡴⣛⢮⣝⣎⡙⡌⠶⣉⢮⡱⡓⢏⡳⣅⢢⠁
+⣝⡺⣝⣏⠾⣴⢮⡵⣤⢋⣆⠳⢦⡍⠎⠑⢈⠂⠄⡀⢀⠀⠀⠀⠐⠀⡀⠁⠀⠄⠂⠀⠂⠠⠀⢀⠠⠀⠀⠠⠀⠀⠀⠀⢀⡔⠃⠀⠀⠀⠀⠐⣲⠟⣡⡐⢀⣰⠂⠀⠀⠀⠀⠀⠀⠀⠀⣼⠈⠦⠀⠀⠘⠛⠛⠂⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠛⠛⠃⠀⠈⠀⠚⠒⠠⠆⠤⢀⠓⠀⠓⠘⠃⠠⠡⢆⣌⣈⢡⠒⠶⡜⣦⢳⡝⣮⢵⣋⢧⢛
+⠞⡵⣫⢞⡹⡜⡲⢹⡌⢯⠜⢏⠳⡘⡙⠎⠡⠋⠒⠡⢂⠜⡀⠐⠈⡀⠠⠀⢂⠀⠄⠐⠀⡀⠀⠀⡀⠀⠄⠀⠀⠀⠰⠚⠁⠀⠀⠀⠀⣀⣤⣾⠏⣞⡴⣡⣿⣃⠖⡤⢂⡄⠀⠀⣀⡤⠞⣿⠀⠀⠀⠀⠋⠡⠤⠞⠁⠀⠀⠐⠀⠁⠠⠀⠄⢈⠀⠊⠁⡐⠌⠠⡁⠄⠠⠀⠄⢠⠀⠌⠀⠂⠐⠀⠄⢢⡰⣉⠖⣣⠶⣜⡴⣋⡜⣳⢫⡝⡞⢯
+⠾⣴⢋⣞⡱⣉⠟⣥⣘⣡⠊⢆⡱⠐⠑⠊⠑⠉⠋⠓⠈⡀⠄⠈⢀⠀⠄⠁⠀⠠⠀⡀⢀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠴⢋⣭⠟⣡⢛⠬⢻⡝⣧⣛⠾⣵⣫⢖⣱⡞⣩⠠⣤⣿⡁⠀⠈⠒⠀⠀⠀⠀⠀⠀⠀⠂⠄⠠⠀⠄⠀⠀⡀⠂⠄⢀⠠⠀⡀⠄⡁⠘⡐⠂⡐⠀⠂⠔⠨⠙⡘⢣⠵⣎⢿⣡⢏⣔⣢⢡⡈⢁⠉⠉⠩⢳
+⡴⢤⡤⣆⣱⡰⢎⡤⡤⣄⢋⠓⠈⠉⠁⠓⢆⡲⡄⢆⠰⢀⠠⠈⠀⠄⠂⠈⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⠴⢛⣡⠴⢋⠂⠍⢤⠩⢌⠣⠜⡤⣉⡛⢶⡹⢎⡿⡽⡶⣽⣦⣿⠙⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠂⠀⠌⠐⡀⠂⠄⠂⠤⠐⠠⠔⠠⠱⢤⠳⢰⡌⡒⠌⠣⠧⡑⢣⠔⡤⢢⠴⠮⠴⣎⠷⡹⢦⣏⢟⡹⠣
+⣛⢳⡛⣬⢥⡭⠞⡴⠙⣜⠺⡖⡳⢎⢳⡙⢦⣀⠐⠀⠠⠀⠀⠄⠁⠀⠂⠈⠐⠈⠀⠂⠐⠀⠂⠐⠀⠂⢀⣤⡴⠞⣫⡴⠚⠉⠁⠆⡁⣼⡴⠶⠛⠶⠷⣼⣤⠱⡘⢆⢇⣋⠶⡹⢽⠶⣧⣿⡄⢳⡀⠀⠀⠀⠀⠀⠀⠁⠀⢈⠀⡀⠄⠠⠀⠂⠀⠄⠂⠐⠀⡐⠀⠄⠂⢄⠠⠠⠄⠠⠑⢊⠓⡒⢩⢆⡋⠖⣋⠚⠒⠓⡐⢂⡁⢂⢈⢠⢓⡳
+⣽⡲⡽⢶⢳⠲⣞⢲⡛⢦⡓⡴⢡⡉⣬⢉⡀⠉⠈⠂⢁⠠⠁⠂⠠⠁⠐⠈⡀⠄⠁⡀⠂⠁⠠⠁⢀⡴⢋⡵⠚⠋⠁⠀⠀⠀⠈⣔⡾⠁⣴⡀⠀⠀⠀⠀⠘⣷⡘⢌⡒⢌⡚⡵⢋⣮⡐⠻⣧⠸⡅⠀⠀⠀⠀⠀⠀⠀⢀⠀⡀⠀⢀⠂⠁⡈⢄⡐⠠⠁⡄⡡⢍⠤⣃⠄⡂⠑⡒⠲⣄⢂⡁⢈⠀⠠⠘⠒⢡⠋⡽⣩⢳⡍⢾⡱⣋⠟⡺⣵
+⠷⡻⣝⢮⣳⡟⣶⢣⣛⢧⡛⠵⣣⢍⡔⠫⠜⡙⠲⢄⢂⡀⠔⣀⠁⠠⠁⠠⠀⡀⠂⠀⡀⠁⢀⣤⠟⣰⠟⠀⠀⠀⠀⠀⠀⢄⡱⡾⠃⠸⡿⠋⠀⠀⠀⠀⠀⠘⣿⡦⢘⠤⢣⠱⣩⠐⡻⢦⡈⠻⣷⠀⠀⠀⠄⠀⠂⢀⠀⠀⠄⠐⠀⠄⠠⠀⡀⠠⠁⢂⢀⠐⠈⡄⣁⣈⢄⠣⣔⣣⣌⠧⣜⣡⢎⠖⠲⠝⠶⣌⠳⣍⢳⢮⣅⡲⣔⣎⡵⣒
+⠿⠱⠋⠟⣦⢹⡜⣩⠏⣞⠹⣓⠷⣎⡹⣉⠝⣌⠣⣈⠂⡉⠲⡀⠌⡀⠄⡁⠠⠀⠤⠁⣴⡴⠟⢁⡼⠃⠀⠀⠀⠀⠀⢀⠰⢨⡇⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⡝⣦⢉⢆⠳⢀⠉⠔⠉⠻⣆⠉⢳⡄⠀⠀⠂⠀⢀⠠⠀⠠⠈⠀⡐⠀⡁⢀⠒⠬⣀⠄⣈⢒⢬⠲⣉⠎⣙⡈⡑⢎⠶⠤⠤⠎⡙⠋⠙⠊⠌⠓⠌⡋⢞⣌⢳⣩⢎⡷⣩
+⣟⢷⣮⢷⣬⢳⡼⣱⡞⣬⡳⣭⢶⡣⢗⡬⠜⡤⡐⠄⢦⠱⡁⠄⠡⠀⠄⠠⠐⠀⣴⠟⣍⢀⡴⠛⠀⠀⢀⠀⠈⠀⠄⠢⢡⢇⣿⣌⢧⡀⠀⠀⠀⠀⠀⢀⣀⣼⡯⣜⣷⠎⣌⠒⡄⠀⠀⠀⠀⠈⢷⡄⠛⣦⠀⢀⠀⠠⠀⡐⠀⠄⠁⠤⠐⠠⠁⠊⡔⢡⠛⡬⢍⠆⠳⡘⠞⡤⢆⡁⢀⠈⠐⡀⠂⢀⡐⡒⣖⡒⣖⢦⡹⣎⡞⣧⢏⡿⣜⣳
+⣯⣞⣬⣳⢎⣧⡽⣥⢎⣥⠽⣤⣣⢍⠦⡜⣩⢔⡠⢌⡠⢁⠈⡀⠂⡅⢀⠂⠈⠄⠺⣦⡠⠟⠀⠀⠀⠁⠂⢀⠀⠂⠈⠀⡐⢎⠾⣿⣮⣇⡘⢤⠶⣒⢛⣋⣭⣿⣷⡿⣏⡻⢤⢋⡜⣑⠢⡄⠀⠀⠀⠹⣆⠈⢧⡀⠠⠁⠀⠄⠐⢀⠈⢀⠐⠀⠁⡁⢌⠦⣙⡜⢣⠎⡑⣈⢤⡱⣌⠬⢧⠛⢧⢓⡹⢦⠯⡵⢎⡹⣬⢳⡝⣮⣝⣮⢻⡼⣝⡾
+⣟⡾⣼⣥⢻⡜⡵⣚⠾⣬⠳⣆⣡⣈⡡⢱⠡⢎⡔⢣⠜⡡⢚⠠⡑⠜⠢⠌⣐⣬⡾⠋⠀⠀⠀⠈⠙⠛⠛⢦⣄⠀⠀⠀⠁⢌⠻⣽⣻⢿⣿⣿⣿⣿⣿⣿⣿⡿⣯⡟⡵⢯⢧⡏⡴⢣⡓⣜⢣⠀⡀⠀⠈⢷⡈⢳⡀⠀⠄⢀⠈⠀⠄⡂⣤⣼⣐⢌⣢⣁⢆⡸⠡⠖⠱⠊⢣⢁⣀⣄⣠⣠⢄⡲⣔⠶⣲⢱⢫⡕⢫⢛⡼⣳⢮⣳⢯⡽⢾⣹
+⣟⣞⡳⢎⡷⣹⢶⣹⡲⣤⠶⠤⣆⢬⣑⣃⠷⣨⠜⣦⢲⢡⢆⣂⠡⡆⠢⣴⣿⡟⠀⢀⣀⣀⣀⣀⣀⠀⠀⠀⠈⠳⡄⠀⠀⡌⢳⢥⣏⢿⡾⣽⢯⡿⣽⣳⢯⣟⣷⣻⡽⢯⣷⣫⣽⡳⡽⣬⣓⠲⡐⠠⠀⠀⢳⡄⢻⣄⠀⠂⠠⢈⣀⣦⣤⠶⠿⣏⣁⠀⠊⣁⠱⢪⡑⢏⢣⢋⠶⣌⢣⣉⡎⡵⢎⡻⢥⣏⡳⣜⡏⠿⣼⣱⣎⡵⣎⣞⣯⢷
+⡛⠾⡙⢯⡚⡵⢦⡤⣵⣜⣋⡛⣊⠇⠦⠬⡔⡡⢌⠴⣢⢆⠶⣈⠧⠼⣀⣿⣿⣇⣼⡿⠿⠿⠟⠛⠛⠛⠛⠂⠀⢠⡿⣄⠳⣌⢧⣛⣮⢷⣻⡽⣯⣟⡷⣯⢟⡾⣵⣻⣞⡿⣶⣛⣶⣻⣗⣳⣏⠷⣉⠖⣡⠂⡀⢿⡀⢿⣲⡏⣻⠛⠙⣄⣤⣑⠢⣼⡟⢈⡑⡩⢦⠥⣼⠰⣎⠞⡶⣩⢎⡵⣩⠳⣏⡝⡳⢎⡽⢺⠽⣙⢦⣉⣎⣝⡱⣬⣤⢮
+⣼⡲⣵⡲⣝⢞⡳⣞⡵⣪⡑⣉⢓⡚⣖⠳⡒⣝⠊⠒⠁⢊⢤⡉⠢⠉⠐⠉⣿⡀⠀⠀⡀⠀⣀⣀⣀⣤⣤⣴⣾⢿⣳⣞⡿⣭⢿⣹⢮⡷⣏⣷⡻⣞⡽⣹⢯⡷⣏⡷⣯⣻⢷⣯⢷⣻⣞⡷⣯⡟⣬⢋⡆⢣⠄⡀⢣⣘⠁⢣⡸⠛⢋⠉⢠⡟⣴⡿⡁⠋⠑⠋⢊⠙⢒⢋⠖⣫⠖⣥⢫⣜⣱⣛⠶⣹⡹⣝⢺⣍⠻⣍⡳⣝⠾⣜⡻⣵⢯⣻
+⣶⡽⣶⣻⡝⣮⢟⡼⣳⢧⣛⡭⣏⡝⢮⡳⡝⣦⢫⡝⢭⢋⠖⣹⠒⠶⠲⠄⣼⣧⡀⠹⣿⣿⣿⡿⣿⣟⡿⣯⣟⣯⡷⣯⢿⡽⣯⣟⣯⢿⡽⣞⡿⣵⢫⣏⣷⣻⣽⣻⢷⣯⣟⣾⣻⢷⣯⣟⣷⡻⣕⡫⣜⡡⠒⡀⠀⠈⠃⢁⠠⡉⠠⣈⣼⠀⣿⡷⣰⢃⢦⣙⢮⣙⢮⢮⣙⢦⠻⣬⢳⢎⡧⣋⠟⡱⢛⡼⢓⢮⣛⠼⡹⣭⡹⣬⣙⣮⢏⡷
+⣧⣛⢶⣣⢟⡽⣞⡽⣣⢟⡼⣣⢟⡼⣳⢭⠳⣌⡳⣜⢧⣫⢞⡤⣩⠖⣥⢛⠤⢋⣿⡀⠹⣿⣿⣽⣷⣻⣽⡷⣯⣷⢿⣻⣯⢿⣽⡾⣯⡿⣽⣻⡿⣌⠳⣜⢾⣳⣯⣟⡿⣾⣽⣞⣯⣿⣳⡿⣾⡝⣧⢳⢬⠱⡁⠄⠠⢀⠀⡀⢆⠡⡔⣼⠃⣰⣟⡱⢣⢏⠶⣩⠖⣭⢚⢧⡛⣮⢳⣣⠟⣮⢳⣝⠾⣝⡯⣞⢯⠳⣭⢻⡵⣳⣝⣧⢟⣮⠿⣽
+⣿⣹⢮⣳⢏⣟⢾⣱⢟⣮⢳⡽⣺⡝⣧⢏⡷⣎⠷⣩⢎⡵⢊⠖⣁⠛⣌⡳⢎⠳⣌⢿⣄⠈⠿⣿⣿⣿⣷⣿⣿⣾⣟⡷⣯⢿⣳⣟⡷⣟⣯⢿⣿⠄⡛⠬⢻⣿⣷⡿⣽⣷⣻⢾⣻⡾⣽⣻⢷⡻⣜⠳⣎⠱⢡⠈⠀⠀⢀⠘⠌⢲⣼⠇⣴⡟⢎⡕⣫⢎⡳⢥⣛⠖⣯⢺⠵⣣⢟⡲⣏⢷⣋⡞⣽⣩⣛⣭⣛⣻⡙⣏⡳⣝⠾⣮⠿⣼⢻⡼
+⡷⣯⣻⡽⣾⣹⢾⣹⢞⡼⣣⡟⣵⡺⣵⢫⡞⣵⢫⡗⣫⠞⣭⢚⡥⣛⠶⡙⢮⡱⢪⡜⣽⡷⠀⣘⢻⣿⣿⣿⣿⣿⣿⣿⣯⣿⣳⣯⢿⡽⣯⣿⣿⡀⠀⠀⠃⠿⣿⡿⣽⡾⣟⣿⡷⣟⡿⣽⢯⡳⣍⠳⢌⡒⢠⠈⡄⢁⠆⡘⠲⣦⡤⣾⡟⣸⠣⡜⢦⢣⡝⢮⡜⣛⡖⣯⣹⢓⣮⢳⡝⣮⢳⡽⣲⢧⣛⡶⣝⢶⣫⣝⡳⣏⡷⣞⡷⣧⡿⣾
+⣿⣳⢯⣷⣻⣼⢻⡼⣫⢷⡻⣼⡳⣽⣚⡧⣟⡼⣣⢟⣥⣛⢦⢫⡜⣥⢻⡝⣦⡙⢧⣼⠏⢀⣼⣿⣷⠾⢿⣿⣿⣿⣿⣿⣿⣿⣿⣾⣿⢿⣿⣽⣿⣇⠀⠀⠀⠀⠹⣿⣯⢿⣽⣳⢿⣯⢿⡽⡾⡵⢎⡖⣣⢞⣣⣗⢰⡊⢵⡌⠄⣼⠳⣾⢣⣇⠻⣜⢧⡏⢾⣡⢟⣱⣛⠶⣭⢻⡜⣧⡻⣵⡻⣼⢳⣏⡷⣏⡿⣞⣳⣽⣻⡼⣏⡷⣯⢷⣻⢷
+⣷⢯⣟⣾⣳⣭⣟⣳⢯⣷⢻⣵⡻⢧⣻⠼⣧⢻⡵⣫⠶⣭⢎⡧⣛⢭⡳⣞⣥⢻⣟⠷⣠⣿⣿⣿⡇⣦⣄⣉⠹⠟⢿⣿⣿⣿⣿⣿⣾⣿⣿⣿⣽⣿⣷⣦⡀⠀⠀⠘⣿⣷⡺⣽⣻⢞⣯⡽⣳⣝⣣⣾⣱⢮⣶⣿⣷⣝⠮⣽⡆⢰⠀⢻⣞⢬⢻⡜⣧⣛⢧⢏⡾⣱⢏⡿⣜⢧⡻⡵⣏⡷⣽⢳⡟⣮⣟⣽⣳⢯⣷⣳⢯⡽⣯⣟⡽⣯⣟⡿
+⣿⣻⣞⣧⣟⡾⣞⡽⣯⣞⣟⣶⢻⣭⢗⣻⡼⣳⢏⡷⣛⡖⡯⢶⡹⣎⢷⡹⣜⣿⣿⠒⠻⢾⣿⡏⢿⣟⡱⢛⠿⣿⣦⣈⡙⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣤⣀⣼⣛⢿⣲⣽⣾⠶⠿⣟⣋⣙⣿⣟⣿⠿⣿⣿⣿⣿⡴⣻⡘⠀⣿⡏⡾⣡⡛⣶⡹⣎⢯⡞⣵⢫⡞⡽⣎⢷⡻⣼⢳⡽⣳⢯⢷⡞⣧⣟⠾⣧⣟⣯⣟⡷⣯⣟⡷⣯⢿
+⣟⣷⣻⢾⣭⢷⣯⣟⡷⣽⣞⡞⣟⣮⡻⣵⢫⣗⣻⢼⣣⢟⡽⣣⣟⡼⣣⢟⡼⣹⢷⣦⡀⠨⠿⠀⢸⣿⡌⣏⠶⣢⠬⢍⠿⡶⣾⣧⣬⣭⣟⠛⢛⣛⡻⠿⠿⠿⠿⠿⣿⣛⡛⢻⣥⣬⣿⡷⢟⣩⠛⣱⡟⢻⣦⡉⢿⣿⢿⣷⡙⣿⢠⣿⡿⣱⢣⡝⣶⡹⣎⢷⡹⢮⡗⣯⢗⡯⣏⡷⣏⣯⢷⣏⡿⡾⣽⣳⣞⣿⣳⣻⢮⡿⣽⣳⢯⡿⣽⣻
+⣿⢾⣽⣻⣞⡿⣾⡽⣞⣷⣫⢿⡽⢶⣻⣵⡻⣎⣟⢮⡷⣫⣞⠷⣎⡷⣛⢮⣳⡹⢶⡻⣷⣦⣄⣄⣼⡷⡸⡜⣶⢡⡓⣎⢲⡱⢬⡰⠞⣜⡹⠛⣏⢹⠛⠶⠶⠶⠶⠶⠾⡟⢟⡻⢋⡵⢢⢣⢆⡘⣶⣫⢜⡣⢞⣿⣌⢻⣿⣽⣷⠏⢸⣿⡱⣏⡳⣝⠶⣝⢮⡳⣏⢿⡼⣫⢾⣝⣳⡽⣫⣞⣯⢾⣽⣛⣷⣛⡾⣧⣟⡷⣯⣟⣷⣻⢯⣟⣯⢿
+⣿⣻⣞⡷⣯⣟⣷⣻⡽⣾⡽⣯⣟⣯⢷⣭⣟⣭⡟⣮⢗⣳⡯⣟⡽⣺⡭⢷⣣⢟⣣⢗⡳⢮⡝⡯⣝⡲⢧⡝⣎⢧⡝⣬⢣⡝⢶⡻⢼⣦⢹⡱⣌⠶⣩⢋⡭⣓⡼⡑⣦⣼⠢⢥⡓⢬⢓⡬⢦⡙⣟⣳⣭⡙⢧⡚⣿⣷⠟⣿⣏⠀⢸⡟⡶⣭⣝⢮⣛⠾⣭⣳⢯⣳⢏⡷⢯⣞⣧⡟⣷⡽⣺⢯⡾⣽⢾⡽⣽⢾⣹⢯⣷⣻⢾⣻⣯⣟⡾⣿
+⣿⣳⣯⣟⡷⣿⢾⣿⣿⣷⣿⣷⣿⣾⣿⡶⣿⣿⡿⣝⣞⡳⣿⣼⢳⢯⣽⢳⣏⡾⣱⠯⣝⠾⡜⡵⣎⠵⣓⡞⡭⣖⡹⢆⣳⠺⣽⣿⣷⡸⢧⡳⣌⠳⣥⢋⠶⡱⢾⣿⣷⠤⡳⢦⡙⡆⢯⡒⢧⣿⣿⣷⡤⣟⠼⣙⣬⢟⣷⡄⠙⢳⣾⣟⣳⢳⡜⣧⡻⣏⣷⡹⣾⢭⡿⣹⣟⡾⣼⣻⣵⣻⡽⣯⢿⡽⣯⢿⡽⣯⣟⣯⣷⡿⣿⣿⣾⣽⣻⣽
+⣿⣳⣟⣾⣻⣟⣿⣿⣿⣿⣻⣟⡿⣻⣻⡽⣿⣿⣟⣼⣳⣿⣽⣯⣯⡷⣞⣯⣞⣿⣵⣻⣜⣿⣜⣳⡝⣾⣭⣳⣱⣮⣕⣫⢖⡹⣛⣯⣝⣯⣽⣗⣎⣳⣌⣟⡜⣣⢿⣿⣿⢪⠵⣎⠵⣹⢶⣹⢻⣿⣿⣿⣷⣩⢟⡱⣼⣾⣯⣿⣶⣾⣿⣿⣯⣷⣫⣷⡝⣷⣎⣿⣽⠾⣽⡳⣿⣿⣱⢷⣿⣳⣿⣽⣯⣿⣝⣯⣟⡷⣯⣟⣷⣿⣿⣿⣷⣻⣽⣻
+⣿⣳⣯⡷⣿⣽⣾⣿⣿⣷⣻⣾⣽⣷⢯⡷⣿⣿⣟⣷⣿⣿⣿⣿⣿⣿⣷⣞⣾⣿⣿⣿⡿⣿⣿⣾⣵⣻⣿⣿⡿⠿⣿⣿⣮⢳⣿⣿⣗⢾⣿⣿⣿⠿⣿⣿⣿⣆⠿⣿⢧⣋⠾⣜⡣⣭⡟⣴⣿⣿⡭⢿⣿⣧⣛⢶⣻⣿⣿⣿⡿⣿⣿⣿⣿⢿⣿⣿⣿⣾⣹⣿⣿⣟⣳⢻⣿⣿⣯⢿⣿⣿⣿⣿⣿⣿⣿⣞⣳⣿⣿⣿⣿⣿⣿⣿⣿⡽⣷⣿
 
-main(alive)
+""",0.001)
+slowtype("Lil FLOPPA ÄR BESVIKEN PÅ DIG",0.1)
+
+slowtype("Du var inte förbered nog och ditt namn kommer snart vara bortglömt",0.1)
+slowtype("""⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀          ⣶⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣶⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⠟⠛⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣴⣾⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⣾⣿⣿⣿⠿⣿⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣿⣿⣿⡁⠀⢿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠭⠛⠻⣿⣿⣿⣿⣤⣼⣿⣿⣿⣿⣿⣷⣶⣶⣄⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣆
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⠀⠀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠛⠉⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣤⣀⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⣿⠿⠿⠿⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠀⠀⠈⠙⣿⣿⣿⣿⣿⣿⡆⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⣿⣿⣿⢿⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⣀⣠⡀⢀⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⡿⠃⠀⠀⠀⠀⠀
+⣴⣾⣶⣶⣿⣿⣷⣿⣿⡟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀
+⠻⠿⣿⣿⣿⣿⣿⣿⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⡿⠁⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠉⠉⠉⠿⠿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣶⡧⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⣿⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⡿⠿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀""",0.002)

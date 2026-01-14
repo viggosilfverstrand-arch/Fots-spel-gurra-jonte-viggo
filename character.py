@@ -11,6 +11,7 @@ def slowtype(text, tid):
 class Characterclass():
     def __init__(self, name, hp, str, critrate, crit_damage):
         self.name = name
+        self.pname = None
         self.hp = hp
         self.str = str
         self.lvl = 1

@@ -1,5 +1,5 @@
 questions = [
-    ("How many humans  permanently live on Antarctica?"),
+    ("How many humans permanently live on Antarctica?"),
     ("How many moons does Earth have?"),
     ("How many World Wars have there been?"),
     ("How many classical orders of Greek architecture are there?"),
