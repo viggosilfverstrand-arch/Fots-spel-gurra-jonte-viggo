@@ -36,8 +36,8 @@ class Characterclass():
         self.str = round(newstr)
         newhp = self.hp * 1.10
         self.hp = round(newhp)
-        print(f"{self.name} levla upp till {self.lvl}!")
-
+        slowtype(f"{self.name} levla upp till {self.lvl}!",.05)
+        slowtype(f"Din bas skada {self.str}", 0.05)
 
     def add_exp(self, reward):
         self.exp += reward
@@ -47,24 +47,24 @@ class Characterclass():
     
     def amoney(self, belopp):
         self.money += belopp
-        print(f"Du har nu {self.money} pengar")
+        slowtype(f"Du har nu {self.money} pengar",0.05)
         
 
 
 # INVENTORY
     def add_item(self, item):
         self.inventory.append(item)
-        print(f"Du plockade upp: {item.name}")
+        slowtype(f"Du plockade upp: {item.name}",0.05)
 
     def show_inventory(self):
         if not self.inventory:
-            print("Inventory är tomt.")
+            slowtype("Inventory är tomt.", 0.05)
             return
 
-        print("\n--- INVENTORY ---")
+        slowtype("\n--- INVENTORY ---",0.01)
         for i, item in enumerate(self.inventory, start=1):
-            print(f"{i}. {item.name} (+{item.health_boost} HP, +{item.damage_boost} DMG)")
-        print("------------------\n")
+            slowtype(f"{i}. {item.name} (+{item.health_boost} HP, +{item.damage_boost} DMG)",0.01)
+        slowtype("------------------\n",0.01)
     
     def show_weapon(self):
         slowtype(f"Ditt vapen är {self.weapon.name}",0.1)
@@ -73,9 +73,9 @@ class Characterclass():
         for item in self.inventory:
             if item.name.lower() == item_name.lower():
                 self.hp += item.health_boost
-                self.str += item.damage_boost
-                print(f"Du använde {item.name}!")
-                print(f"Ny HP: {self.hp}, Ny DMG: {self.str}")
+                self.str *= item.damage_boost
+                slowtype(f"Du använde {item.name}!",0.05)
+                slowtype(f"Ny HP: {self.hp}, Ny DMG: {self.str}",0.05)
                 self.inventory.remove(item)
                 return
-        print("Du har inte det föremålet!")
+        slowtype("Du har inte det föremålet!",0.05)
