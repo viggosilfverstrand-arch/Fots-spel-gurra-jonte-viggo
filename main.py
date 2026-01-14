@@ -1125,7 +1125,7 @@ def skogsvägen(alive):
                             slowtype("Varför bor du här ute? Frågar du Greta.",0.05)
                             slowtype("Jag har alltid bott i dessa skogar. De är hela min barndom och jag kan inte få mig själv att flytta där ifrån. Det är också lungt dagarna om och jag slipper oftast personer som dig. Svarar Greta", 0.05)
                             slowtype("Jahopp då. Får du ur dig.",0.05)
-                            slowtype("Jag gjorde min favoritgryta till middag, vill du ha? Frågar Greta.",0.05)
+                            slowtype("Jag har gjort min favoritgryta till middag, vill du ha? Frågar Greta.",0.05)
                             time.sleep(1)
                             
                             damfråga3 = int(input("""                   Vad gör du?
@@ -1518,7 +1518,7 @@ def main(alive):
             else:
                  slowtype("error i main", 0.05)
             if alive == False:
-                slowtype("DU DOG", 0.05)
+                slowtype("DU DOG", 0.2)
 
         elif Platsval == "2":
             os.system('cls' if os.name == 'nt' else 'clear')
