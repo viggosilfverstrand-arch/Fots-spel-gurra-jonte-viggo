@@ -1437,18 +1437,18 @@ def bibliotekt():
             slowtype("""        Var vill du gå?
             1. Monster boks hyllan        2. Natur boks hyllan      3. Den vise mannen
                                                 4. Gå tillbaka
-              -> """, 0.05)
-            bok_val = int(input())
+              """, 0.05)
+            bok_val = int(input("-> "))
             os.system('cls' if os.name == 'nt' else 'clear')
             
 
             if bok_val == 1:
-                        slowtype("""    Vilket monster skulle du vilja läsa om?
-                                        1. Skeleton     2. Goblin       3. Goon        4. Bandit
-                                                        5. Troll        6. Varulv 
-                                                                7. Lämna
-                        ->""", 0.05)
-                        monster_val = int(input())
+                        slowtype("""    Detta är alla monster som vi har information på. Vilket skulle du vilja läsa om?
+                            1. Skeleton     2. Goblin       3. Goon        4. Bandit
+                                            5. Troll        6. Varulv 
+                                                    7. Lämna
+                    """, 0.05)
+                        monster_val = int(input("-> "))
                         os.system('cls' if os.name == 'nt' else 'clear')
                         try:
                             if monster_val == 1:
@@ -1538,6 +1538,7 @@ Nu ekar tystnaden mellan ruinerna, och platsen bär på historiens mysterier och
                                 slowtype("I have seen them all but not even Leonard Euler could have counted them ",0.1)
                                 time.sleep(0.5)
                                 slowtype("Goodbye", 0.1)
+                                input("Tryck enter för att gå tillbaks till biblioteket ->")
                                 playerclass.hybris = True     #Sätter playern som hybris
                                 
                             else:
@@ -1583,7 +1584,7 @@ Nu ekar tystnaden mellan ruinerna, och platsen bär på historiens mysterier och
                                 time.sleep(2)
                                 slowtype("Only then can i die happy", 0.05)
                                 input("Tryck enter för att gå tillbaks till biblioteket ->")
-
+                                break
                     break
                         
                     
