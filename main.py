@@ -34,26 +34,36 @@ Item_list1 = [Item("Small Health Potion", 15, 1),
               Item("Damage Potion", 0, 1.1)]
 
 # Monster
-monster_list1 = [Monster("Skeleton", 40, 20, 1),
-                 Monster("Goblin", 75, 10, 1),
-                 Monster("Goon", 35, 20, 1),
-                 Monster("Bandit", 50, 13, 1)]
+monster_list1 = [Monster("Skeleton", 40, 20, 1.2),
+                 Monster("Goblin", 75, 10, 1.5),
+                 Monster("Goon", 35, 20, 1.2),
+                 Monster("Bandit", 50, 13, 1.1),
+                 Monster("Zombie",60, 12, 1.2),
+                 Monster("Spider", 50, 10, 1.3),
+                 Monster("Cannibal",45, 14, 1.5),
+                 Monster("Gnome", 20, 5, 3)
+                 ]
 
-monster_list2 = [Monster("Demon", 150, 26, 1),
-                 Monster("Troll", 200, 18, 1),
-                 Monster("Vandrande Själ", 75, 35, 1),
-                 Monster("Varulv", 175, 23, 1)]
+monster_list2 = [Monster("Demon", 150, 26, 1.3),
+                 Monster("Troll", 200, 18, 1.5),
+                 Monster("Vandrande Själ", 75, 35, 1.2),
+                 Monster("Varulv", 175, 23, 1.5),
+                 Monster("Griffin", 125, 28,1.4),
+                 Monster("Minotaur",225,15,2),
+                 Monster("Alcoholic Unc", 100, 8, 6)]
 
-monster_list3 = [Monster("Jätte", 300, 35, 1),
-                 Monster("Drake", 250, 45, 1),
-                 Monster("Golem", 400, 20, 1),]   # Han är en dyr modell
+monster_list3 = [Monster("Jätte", 300, 35, 1.3),
+                 Monster("Drake", 250, 45, 1.2),
+                 Monster("Golem", 400, 20, 1.1),
+                 Monster("Hydra",275,40,1.5),
+                 Monster("Midsgårdsormen", 400, 30, 1.05 )]   # Han är en dyr modell
 
-sandworm = Monster("Sandworm", 124, 24, 1)
-Boss = Monster("The King of Darkness", 600, 100, 1)
-SkelettRaptor = Monster("Skelett Raptor", 100, 30, 1)
-SkogensVäktare = Monster("Skogens Väktare",150,20,1 )
-FiskMänniska = Monster("Fisk Människa",100,25,1)
-Skuggriddare = Monster("Skuggriddare", 275, 50, 1)
+sandworm = Monster("Sandworm", 124, 24, 1.2)
+Boss = Monster("The King of Darkness", 600, 100, 1.1)
+SkelettRaptor = Monster("Skelett Raptor", 100, 30, 1.3)
+SkogensVäktare = Monster("Skogens Väktare",150,20, 1.2 )
+FiskMänniska = Monster("Lil FLOPPA",100, 20, 1.2)
+Skuggriddare = Monster("Skuggriddare", 200, 20, 2.5)
 # Gameplay
 
 def slowtype(text, tid):
@@ -160,6 +170,9 @@ while True:
         slowtype("skriv ett tal", 0.05)
 if loaded == False:
     playerclass.pname = input("Vad ska din karaktär heta? ")
+    if playerclass.pname == "N":
+        playerclass.amoney(1000)
+        playerclass.add_exp(50)
     slowtype(f"Du valde namnet {playerclass.pname}!", 0.05)
     input("Tryck enter för att fortsätta -> ")
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -209,7 +222,7 @@ def vägdecision():  # Väg val på de olika vägarna
     while True:
         vägval3 = input("Vill du vända tillbaka? Ja eller Nej -> ")
         vägval3=vägval3.upper()
-        try:
+        try:                                                                #try gör så att spelet inte krashar när den märker ett fel, istället skickar den vidare till except
             if vägval3 == "JA" or vägval3 == "YES":
                 vägsvar = 1      # Player vill vända tillbaka
             elif vägval3 == "NEJ" or vägval3 == "NO":
@@ -774,6 +787,7 @@ def monsterpullar():
     monsterval = rand.choice(monsterlista)
     slowtype(f"Du ser monstret {monsterval.name}", 0.1)
     time.sleep(1)
+    monsterlista.remove(monsterval)
     return monsterval
 
 
@@ -783,7 +797,7 @@ def monsterpullar():
 def battle(monsterval, playerclass, alive):
     while playerclass.hp > 0 and monsterval.hp > 0:
 
-        slowtype(f"""Vad vill du göra?   Du har {playerclass.hp} hp,
+        slowtype(f"""Vad vill du göra?   Du har {playerclass.hp} hp, och vapnet {playerclass.weapon.name}
         {monsterval.name} har {monsterval.hp} hp
         1. Attackera
         2. Försök att fly """,0.02)
@@ -827,7 +841,7 @@ def battle(monsterval, playerclass, alive):
             
             return 
         if rand.random() < 0.1:
-            monsterval.dmg *=1.2
+            monsterval.dmg *= monsterval.crit_damage
             monsterval.dmg = round(monsterval.dmg)
             slowtype("Monstret fick en crit!!!", 0.02)
         slowtype(f"{monsterval.name} attackerar dig och gör {monsterval.dmg} skada!", 0.02)
@@ -1303,7 +1317,7 @@ def abanondedcity(alive):
                 slowtype("Du går fram till den vackra bilen och bestämmer dig för att se om den fungerar så du bryter dig in via fönsterrutan.", 0.05)
                 slowtype("Solklart glömmer du ju bort att det behövs nycklar, så du behöver går ut ur bilen i misstro.", 0.05)
                 slowtype("ågonting glimmade till i baksätet och bestämmer dig för att tar ännu en tit in i bilen.", 0.05)
-                slowtype("Det visade sig vara ett golfsett.", 0.05)
+                slowtype("Det visade sig vara ett golfset.", 0.05)
                 while True:
                     time.sleep(2)
                     Tauppbackseatweapon = int(input(f"""Vill du plocka upp en golfklubba och byta ut den mot ditt nuvarande vapnet {playerclass.weapon.name}?
@@ -1342,7 +1356,7 @@ def abanondedcity(alive):
     slowtype("Men plötsligt så hörs ett skräckinjagande vrål mitt i det lugna.", 0.05)
     while True:
         museumfortsättaellerundersöka = int(input("""Vill du undersöka vrålet eller vill du fortsätta ut ur staden?
-        1. Undersöka     2. Fortsätta(Kommer med konsekvenser)
+        1. Undersöka     2. Fortsätta
         -> """))
         try:
             if museumfortsättaellerundersöka == 1:
@@ -1552,18 +1566,21 @@ Nu ekar tystnaden mellan ruinerna, och platsen bär på historiens mysterier och
     return playerclass.hybris       #Skickar tillbaka om playern har hybris eller inte
 
 #Om du vill prova något lägg till det här!!!
-playerclass.add_exp(40)
+
+
 def main(alive):
     while alive == True:
         os.system('cls' if os.name == 'nt' else 'clear')
         time.sleep(1)
         slowtype(f"""
                     Välkommen till Sweelept
-        1. Äventyr       2. Marknaden       3. Bibloteket
+
+        1. Äventyr           2. Marknaden           3. Bibloteket
     
-                4. Inventory     5. Casino       Dmg:{playerclass.str}
-                                                 HP:{playerclass.hp}
-                        6. Save game             Lvl:{playerclass.lvl}
+                4. Inventory     5. Casino          Dmg:{playerclass.str}
+                                                    HP:{playerclass.hp}
+ Vapen:{playerclass.weapon.name}    6. Save game                Lvl:{playerclass.lvl}
+
             """, 0.01)
         Platsval = input("Vad vill du välja? ")
         if Platsval == "1":
@@ -1629,6 +1646,8 @@ def main(alive):
         else:
             pass
 
+main(alive)
+
 slowtype("""
 ⠿⡼⢳⢯⡿⣽⣛⣎⣳⣭⣞⣶⣳⣤⢦⣴⣿⣏            ⢴⣶⡄⠀⠰⣶⣦⠀⠀⠀⠀⠉⠠⠀⠈⠤⣴⣶⣶⣶⣶⣶⣶⣶⣶⣶⣄⠀⠀⣤⣶⠊⠁⠀⠀⠀⢀⠀⠀⠀⣉⠈⠉⠉⠁⠀⠈⠁⠀⠈⢻⣌⠇⣛⠧⣹⠳⠄⢛⡈⠁⡀⠄⡙⠛⡶⢭⠶⣀⣋⢀⡁⡁⠼⠧⣘⣳⠽⣛⢯⡙⣭⠻⡕⠚⠛⠻⠯⢟⣹⣎⢯⠛
 ⣑⣬⣣⢎⡴⣥⠭⡌⢥⡹⡜⡜⠣⠎⠇⣿⣿⡟⠋⡁⠓⠈⡁⠠⠈⠀⠀⠛⠃⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⣽⣿⡟⠻⣏⣩⠿⠛⠛⠋⠋⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⢀⡠⠤⠋⠋⠓⠒⠛⠓⠀⠰⠤⠄⠀⠈⠛⠋⠛⠚⠳⢤⡬⣝⠃⠛⠃⠬⠷⠼⢳⣏⠿⣭⠾⣵⢫⠖⡾⢥⣤⡑⣌⠢⣉⠄⡁⠤⠬⡔⠂⠒⠉⠓⠬⡷⢶
@@ -1672,7 +1691,7 @@ slowtype("""
 slowtype("Lil FLOPPA ÄR BESVIKEN PÅ DIG",0.1)
 
 slowtype("Du var inte förbered nog och ditt namn kommer snart vara bortglömt",0.1)
-slowtype("""⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀          ⣶⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+slowtype("""⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀         ⣶⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣶⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⠟⠛⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣴⣾⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀
