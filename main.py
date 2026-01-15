@@ -1446,8 +1446,7 @@ def bibliotekt():
                         slowtype("""    Detta är alla monster som vi har information på. Vilket skulle du vilja läsa om?
                             1. Skeleton     2. Goblin       3. Goon        4. Bandit
                                             5. Troll        6. Varulv 
-                                                    7. Lämna
-                    """, 0.05)
+                                                    7. Lämna                   """, 0.01)
                         monster_val = int(input("-> "))
                         os.system('cls' if os.name == 'nt' else 'clear')
                         try:
@@ -1455,29 +1454,35 @@ def bibliotekt():
                                     slowtype("""En forntida krigare vars själ aldrig fann ro. Benen är sammanbundna av förbannad vilja,\n
 och i ögonhålorna lyser ett svagt blått sken. Skeletons vaknar där strider en gång rasade,
 alltid redo att fortsätta ett krig som för länge sedan tagit slut.""", 0.05)
+                                    input("Tryck enter för att sluta läsa->")
                             elif monster_val == 2:
                                     slowtype("""Små, gröna och evigt irriterande. Goblins trivs i skuggorna där de skrattar åt sina egna dumma skämt.\n
 Deras svaga kroppar gör dem fega, men deras hastighet och list gör dem farliga i grupp.\n
 En ensam goblin är ett problem – en flock är en katastrof.
-""", 0.05)
+""", 0.05) 
+                                    input("Tryck enter för att sluta läsa->")                  
                             elif monster_val == 3:
                                     slowtype(""" En trasig själ med en kropp som verkar ihopslängd av kaos självt. Goons är förvirrade, oberäkneliga och farliga.\n
 De förstår inte rädsla, inte smärta och ibland inte ens att de är i en strid. Deras slumpslag kan vara både värdelösa – eller dödliga.
 """, 0.05)
+                                    input("Tryck enter för att sluta läsa->")
                             elif monster_val == 4:
                                     slowtype("""En före detta människa som valde mörka vägar.\n
 Deras snabbhet, vassa knivar och ännu vassare instinkter gör dem dödliga plågoandar längs vägarna.\n
 Banditer attackerar inte för nöje – utan för överlevnad.
 """, 0.05)
+                                    input("Tryck enter för att sluta läsa->")
                             elif monster_val == 5:
                                     slowtype(""" Troll föds ur jordens djup, formade av lera och sten.\n
 De är långsamma i både huvud och kropp, men när de slår – skälver världen.\n
 Många äventyrare föraktar troll, men få vet att deras hjärtan slår med sorg efter förlorade skogar.
                                     """, 0.05)
+                                    input("Tryck enter för att sluta läsa->")
                             elif monster_val == 6:
                                     slowtype(""" En människa förbannad av månen. När skymningen faller förlorar de förståndet och förvandlas till en snabb, brutal predator.\n
 Deras ylande ekar genom nattens skogar och deras klor lämnar djupa ärr i både trä och kött.
 """, 0.05)
+                                    input("Tryck enter för att sluta läsa->")
                             elif monster_val == 7:
                                 break
                             else:
@@ -1488,7 +1493,7 @@ Deras ylande ekar genom nattens skogar och deras klor lämnar djupa ärr i både
             elif bok_val == 2:
                 os.system('cls' if os.name == 'nt' else 'clear')
                 slowtype("""       Vilken natur vill du läsa om?
-                                    1. Grottvägen       2. Skogsvägen       3. Abanonded City
+                                    1. Grottvägen       2. Skogsvägen       3. Övergivna Staden
                                                             4. Lämna
                             """, 0.05)
                 natur_val = int(input())
@@ -1538,7 +1543,7 @@ Nu ekar tystnaden mellan ruinerna, och platsen bär på historiens mysterier och
                                 slowtype("I have seen them all but not even Leonard Euler could have counted them ",0.1)
                                 time.sleep(0.5)
                                 slowtype("Goodbye", 0.1)
-                                input("Tryck enter för att gå tillbaks till biblioteket ->")
+                                input("Tryck enter för att lämna biblioteket ->")
                                 playerclass.hybris = True     #Sätter playern som hybris
                                 
                             else:
@@ -1583,7 +1588,7 @@ Nu ekar tystnaden mellan ruinerna, och platsen bär på historiens mysterier och
                                 slowtype("Now son, I wish that you get out there deafeat him",0.05)
                                 time.sleep(2)
                                 slowtype("Only then can i die happy", 0.05)
-                                input("Tryck enter för att gå tillbaks till biblioteket ->")
+                                input("Tryck enter för att lämna biblioteket ->")
                                 break
                     break
                         
