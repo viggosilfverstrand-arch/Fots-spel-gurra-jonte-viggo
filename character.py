@@ -64,11 +64,11 @@ class Characterclass():
 
         slowtype("\n--- INVENTORY ---",0.01)
         for i, item in enumerate(self.inventory, start=1):
-            slowtype(f"{i}. {item.name} (+{item.health_boost} HP, +{item.damage_boost} DMG)",0.01)
+            slowtype(f"{i}. {item.name} (+{item.health_boost} HP, *{item.damage_boost} DMG)",0.01)
         slowtype("------------------\n",0.01)
     
     def show_weapon(self):
-        slowtype(f"Ditt vapen är {self.weapon.name}",0.1)
+        slowtype(f"Ditt vapen är {self.weapon.name}",0.05)
 
     def use_item(self, item_name):
         for item in self.inventory:
@@ -78,5 +78,6 @@ class Characterclass():
                 slowtype(f"Du använde {item.name}!",0.05)
                 slowtype(f"Ny HP: {self.hp}, Ny DMG: {self.str}",0.05)
                 self.inventory.remove(item)
+
                 return
         slowtype("Du har inte det föremålet!",0.05)
